@@ -1,66 +1,84 @@
-package Testing2DGame.Main;
+package Main;
 
 public class Player {
 
-    private String playersPokemon;
-    private int level;
-//    private String[][] moves = new String[2][2];
+    // VARIABLES
+    private String playerName;
+    private Pokemons pokemon;
+    private int HP;
+    private int XP;
+    private String location;  //should we make another class for location?
 
-    private String move1, move2, playersName;
 
 
-    public Player(String playersName, String playersPokemon ) {
-        this.playersPokemon = playersPokemon;
-        this.level = 5;
-        this.playersName= playersName;
-         move1 = "Tackle";
-         move2 = "Vine Whip";
+    // 1. CONSTRUCTOR
+    // receive: 1.Player name, 2. chosen pokemon, ??
+    public Player (String playerName, Pokemons pokemon){
+        this.playerName = playerName;
+        this.pokemon = pokemon;
+        HP = 0;
+        XP = 0;
+        location = "Pallet town";
+
     }
 
-    public String getPlayersName() {
-        return playersName;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GETTER SETTER METHODS
+
+
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setPlayersName(String playersName) {
-        this.playersName = playersName;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
-    public String getPlayersPokemon() {
-        return playersPokemon;
+    public Pokemons getPokemon() {
+        return pokemon;
     }
 
-    public void setPlayersPokemon(String playersPokemon) {
-        this.playersPokemon = playersPokemon;
+    public void setPokemon(Pokemons pokemon) {
+        this.pokemon = pokemon;
     }
 
-    public int getLevel() {
-        return level;
+    public int getHP() {
+        return HP;
     }
 
-    public void setLevel(int level) {
-        this.level = level;
+    public void setHP(int HP) {
+        this.HP = HP;
     }
 
-    public String getMove1() {
-        return move1;
+    public int getXP() {
+        return XP;
     }
 
-    public void setMove1(String move1) {
-        this.move1 = move1;
+    public void setXP(int XP) {
+        this.XP = XP;
     }
 
-    public String getMove2() {
-        return move2;
+    public String getLocation() {
+        return location;
     }
 
-    public void setMove2(String move2) {
-        this.move2 = move2;
+    public void setLocation(String location) {
+        this.location = location;
     }
-    //    public String[][] getMoves() {
-//        return moves;
-//    }
-//
-//    public void setMoves(String[][] moves) {
-//        this.moves = moves;
-//    }
 }
