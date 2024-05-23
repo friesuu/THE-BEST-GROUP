@@ -7,8 +7,11 @@ public class Player {
     private Pokemons pokemon;
     private int HP;
     private int XP;
-    private String location;  //should we make another class for location?
 
+    //private String location;  //should we make another class for location?
+
+    ///UPDATE: use City class for location
+    private City location;
 
 
     // 1. CONSTRUCTOR
@@ -18,7 +21,7 @@ public class Player {
         this.pokemon = pokemon;
         HP = 0;
         XP = 0;
-        location = "Pallet town";
+        location = CityManager.cities.get("Pallet Town");
 
     }
 
@@ -74,11 +77,11 @@ public class Player {
         this.XP = XP;
     }
 
-    public String getLocation() {
+    public City getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(City location) {
         this.location = location;
     }
 }

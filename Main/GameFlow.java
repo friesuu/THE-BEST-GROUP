@@ -2,11 +2,25 @@ package Main;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameFlow {
 
     static Pokemons[] pokemons = new Pokemons[3];
+
+    public static char[][] maze =
+            {
+                    {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+                    {'#', 'S', '.', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
+                    {'#', '#', '#', '#', '#', '.', '#', '.', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
+                    {'#', '.', '.', '.', '#', '.', '#', '.', '#', '.', '.', '.', 'G', '.', '.', '.', '#'},
+                    {'#', '#', '#', '.', '#', '.', '#', '.', '#', 'G', '#', '#', '#', '.', '#', '.', '#'},
+                    {'#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '.', '.', '.', 'G', '.', '#'},
+                    {'#', '#', '#', '#', '#', 'G', '#', '.', '#', '#', '#', '#', '#', '#', '#', '.', '#'},
+                    {'#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#'},
+                    {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', 'E', '#'}
+            };
 
 
     // 1. STARTING METHOD
@@ -55,18 +69,26 @@ public class GameFlow {
     // this method is to print out player's choices for their next move
     public void intermediate (Player player){
 
-        System.out.println("You are currently in " + player.getLocation());
+        System.out.println("You are currently in " + player.getLocation().getName());
         System.out.println("+--------------------------------------------------------------------------------------------+");
         System.out.println("[1] Move to:");
 
         //later need to make the cities to be dynamic based on where the player is.
-        System.out.printf("    %-20s %-20s %n", "a. Cerulean City", "b. Viridian City");
-        System.out.println("[2] Challenge Gym leader [Brock - Rock Type]");
-        System.out.println("[3] Fight Wild Pokemon [Pidgey, Meowth, Sycther are common]");
+        // System.out.printf("    %-20s %-20s %n", "a. Cerulean City", "b. Viridian City");
+
+        List<String> adjacentCities = (CityManager.cities).get(CityManager.currentCity).getAdjacentCities();
+        System.out.println("[1] Move to:");
+        for (int i = 0; i < adjacentCities.size(); i++) {
+            System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
+        }
+        System.out.println("[2] Challenge Gym leader [" + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + " - " + (CityManager.cities).get(CityManager.currentCity).getGymType() + " type]");
+        System.out.println("[3] Fight Wild Pokémon [" + String.join(", ", (CityManager.cities).get(CityManager.currentCity).getWildPokemon()) + " are common]");
         System.out.println("[4] Player Options");
         System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
+        System.out.println("[5] PokeMaze");
+
         System.out.println("+--------------------------------------------------------------------------------------------+");
-        nextStep(player, choice());
+        nextStep(player, choice(), adjacentCities);
         //i dont remember wat this was for?
     }
 
@@ -171,15 +193,144 @@ public class GameFlow {
         }
     }
 
-    public  void nextStep (Player player, String decision){
+    public  void nextStep (Player player, String decision, List<String> adjacentCities){
 
-        if (decision.equalsIgnoreCase("2")){
+        Scanner scanner = new Scanner(System.in);
+//        if (decision.equalsIgnoreCase("2")){
+//
+//            //later need to make the opponent to be dynamic based on where the player is.
+//            Battle battle = new Battle (player, "Brock");
+//        }
 
-            //later need to make the opponent to be dynamic based on where the player is.
-            Battle battle = new Battle (player, "Brock");
+        switch (Integer.parseInt(decision))
+        {
+            case 1:
+            {
+                System.out.print("Move to: ");
+                int cityChoice = scanner.nextInt();
+                if (cityChoice >= 1 && cityChoice <= adjacentCities.size())
+                {
+                    CityManager.currentCity = adjacentCities.get(cityChoice - 1);
+                    player.setLocation(CityManager.cities.get(CityManager.currentCity));
+                    System.out.println("Moving to " + CityManager.currentCity + "...");
+                }
+                else
+                {
+                    System.out.println("Invalid choice.");
+                }
+                break;
+            }
+            case 2:
+            {
+                System.out.println("Challenging Gym Leader " + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + "...");
+                // Implement Gym Leader battle logic here
+
+                Battle battle = new Battle(player, CityManager.cities.get(CityManager.currentCity));
+                break;
+            }
+            case 3:
+            {
+                System.out.println("Encountering wild Pokémon...");
+                // Implement wild Pokémon encounter logic here
+                break;
+            }
+            case 4:
+            {
+                System.out.println("Player Options:");
+                System.out.println("a. Show map");
+                System.out.println("b. Show My Pokémon");
+                System.out.println("c. Show My badges");
+                System.out.println("d. Save and Exit");
+                System.out.println("e. Exit");
+                System.out.print("Your choice: ");
+                String playerOption = scanner.next();
+                switch (playerOption)
+                {
+                    case "a":
+                    {
+                        displayMap();
+                        break;
+                    }
+                    case "b":
+                    {
+                        // Implement showing player's Pokémon
+                        break;
+                    }
+                    case "c":
+                    {
+                        // Implement showing player's badges
+                        break;
+                    }
+                    case "d":
+                    {
+                        System.out.println("Saving game and exiting..."); // Implement game saving code
+                        System.exit(0);
+                    }
+                    case "e":
+                    {
+                        break;
+                    }
+                    default:
+                        System.out.println("Invalid option.");
+                }
+                break;
+            }
+            case 5:
+            {
+                int[] start = {1, 1};
+                int[] end = {8, 15};
+
+                MazeGame game = new MazeGame(maze, start, end);
+                Scanner keyboard = new Scanner(System.in);
+
+                System.out.println("Welcome to the PokeMaze Challenge!");
+                while (true)
+                {
+                    game.displayMaze();
+                    System.out.print("Enter direction (up, down, left, right): ");
+                    String direction = keyboard.nextLine();
+
+                    if (game.move(direction))
+                    {
+                        if (game.isCaughtByGhost(game.currentPosition))
+                        {
+                            game.displayMaze();
+                            System.out.println("Oh no! You encountered a Ghastly and got caught.");
+                            System.out.println("Game Over.");
+                            break;
+                        }
+                        if (game.hasReachedEnd())
+                        {
+                            game.displayMaze();
+                            System.out.println("Congratulations! You've reached the end of the maze.");
+                            break;
+                        }
+                    }
+                }
+
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid choice. Please try again.");
+            }
         }
 
 
+
+    }
+
+    private static void displayMap() {
+        System.out.println("+----------------------------------------------------------------------+");
+        System.out.println("Map of Kanto");
+        for (String cityName : CityManager.cities.keySet()) {
+            if (cityName.equals(CityManager.currentCity)) {
+                System.out.println("[**" + cityName + "**]");
+            } else {
+                System.out.println("[" + cityName + "]");
+            }
+        }
+        System.out.println("+----------------------------------------------------------------------+");
     }
 
 
