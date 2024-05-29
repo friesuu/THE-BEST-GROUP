@@ -2,6 +2,7 @@ package Testing2DGame.Entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -15,10 +16,22 @@ public class Player extends Entity
     GamePanel gamePanel;
     KeyHandler keyHandler;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gp, KeyHandler keyHandler)
     {
         this.gamePanel = gp;
         this.keyHandler = keyHandler;
+
+        screenX = gamePanel.screenWidth/2 - (gamePanel.tileSize/2);
+        screenY = gp.screenHeight/2 - (gamePanel.tileSize/2);
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
         setDefaultValues();
         getPlayerImage();
@@ -27,8 +40,8 @@ public class Player extends Entity
     // Set player's default position
     public void setDefaultValues()
     {
-        x = 100;
-        y = 100;
+        worldX = gamePanel.tileSize * 3;
+        worldY = gamePanel.tileSize * 35;
         speed = 4;
         direction = "down";
     }
@@ -59,24 +72,57 @@ public class Player extends Entity
             if(keyHandler.upPressed == true)
             {
                 direction = "up";
-                y -= speed;
+                // worldY -= speed;
             }
             else if(keyHandler.downPressed == true)
             {
                 direction = "down";
-                y += speed;
+                // worldY += speed;
             }
             else if(keyHandler.leftPressed == true)
             {
                 direction = "left";
-                x -= speed;
+                // worldX -= speed;
             }
             else if(keyHandler.rightPressed == true)
             {
                 direction = "right";
-                x += speed;
+                // worldX += speed;
             }
     
+
+            // Checks tile collision
+            collisionOn = false;
+            gamePanel.checker.checkTile(this);
+
+            // If collision is false, player can move
+            if(collisionOn == false)
+            {
+                switch (direction) 
+                {
+                    case "up":
+                    {
+                        worldY -= speed;
+                        break;
+                    }
+                    case "down":
+                    {
+                        worldY += speed;
+                        break;
+                    }
+                    case "left":
+                    {
+                        worldX -= speed;
+                        break;
+                    }
+                    case "right":
+                    {
+                        worldX += speed;
+                        break;
+                    }
+                }
+            }
+
             spriteCounter++;
             if(spriteCounter > 15)
             {
@@ -151,7 +197,7 @@ public class Player extends Entity
                 break;
             }
         }
-        g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
         
     }
 }

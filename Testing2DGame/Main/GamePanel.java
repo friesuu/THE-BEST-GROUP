@@ -12,21 +12,29 @@ import Testing2DGame.Tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable 
 {
+    // Screen settings
     final int originalTileSize = 16;
     final int scale = 3;
 
     public final int tileSize = originalTileSize * scale;
-    public final int maxScreenCol = 40;
-    public final int maxScreenRow = 25;
+    public final int maxScreenCol = 30;
+    public final int maxScreenRow = 18;
     public final int screenWidth = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
+
+    // World settings
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 60;
+    public final int wordWidt = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
 
     int FPS = 120;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyHandle = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyHandle);
+    public Player player = new Player(this, keyHandle);
+    public CollisionChecker checker = new CollisionChecker(this);
 
     public GamePanel() 
     {

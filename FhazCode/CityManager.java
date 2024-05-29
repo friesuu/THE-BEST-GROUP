@@ -1,4 +1,4 @@
-package PokemonKantoRegion;
+package FhazCode;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class CityManager extends HashMap<String, City>
 {
-    public Map<String, City> cities;
-    //private static String currentCity = "Pallet Town"; // Start at Pallet Town
+    public static Map<String, City> cities;
+    public static String currentCity = "Pallet Town"; // Start at Pallet Town
 
     public CityManager()
     {
