@@ -19,7 +19,8 @@ public class Main
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
-
+        
+        panel.setupGame();
         panel.startGameThread();
     }
 }

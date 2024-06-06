@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
 import javax.swing.JPanel;
-
 import Testing2DGame.Entity.Player;
 import Testing2DGame.Tile.TileManager;
+import Testing2DGame.object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable 
 {
@@ -28,13 +27,15 @@ public class GamePanel extends JPanel implements Runnable
     public final int wordWidt = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
-    int FPS = 120;
+    int FPS = 60;
 
     TileManager tileManager = new TileManager(this);
     KeyHandler keyHandle = new KeyHandler();
     Thread gameThread;
     public Player player = new Player(this, keyHandle);
     public CollisionChecker checker = new CollisionChecker(this);
+    public SuperObject object[] = new SuperObject[10]; // Prepares 10 slots for objects, can display 10 objects at the same time
+    public ObjectPlacer objectPlacer = new ObjectPlacer(this);
 
     public GamePanel() 
     {
@@ -43,6 +44,11 @@ public class GamePanel extends JPanel implements Runnable
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandle);
         this.setFocusable(true); // GamePanel can be "focused" to receive key input
+    }
+
+    public void setupGame()
+    {
+        objectPlacer.setObject();
     }
 
     public void startGameThread() 
@@ -100,8 +106,18 @@ public class GamePanel extends JPanel implements Runnable
 
         Graphics2D g2 = (Graphics2D) g;
         
-        tileManager.draw(g2);
-        player.draw(g2);
+        tileManager.draw(g2); // TILES
+
+        // OBJECT
+        for(int i = 0; i < object.length; i++)
+        {
+            if(object[i] != null)
+            {
+                object[i].draw(g2, this);
+            }
+        }
+
+        player.draw(g2); // PLAYER
         g.dispose();
     }
 }
