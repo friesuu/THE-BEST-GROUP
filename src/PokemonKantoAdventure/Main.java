@@ -53,16 +53,5 @@ public class Main {
 
     }
 
-//    private static void displayMap() {
-//        System.out.println("+----------------------------------------------------------------------+");
-//        System.out.println("Map of Kanto");
-//        for (String cityName : cityManager.keySet()) {
-//            if (cityName.equals(currentCity)) {
-//                System.out.println("[**" + cityName + "**]");
-//            } else {
-//                System.out.println("[" + cityName + "]");
-//            }
-//        }
-//        System.out.println("+----------------------------------------------------------------------+");
-//    }
+
 }

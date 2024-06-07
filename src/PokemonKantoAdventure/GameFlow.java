@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class GameFlow {
 
-    static Pokemon[] pokemons = new Pokemon[34];
+    static Pokemon[] pokemons = new Pokemon[54];
 
     public static char[][] maze =
             {
@@ -106,11 +106,19 @@ public class GameFlow {
 
 
         List<String> adjacentCities = (CityManager.cities).get(CityManager.currentCity).getAdjacentCities();
+        City currentCity = player.getLocation();
         System.out.println("[1] Move to:");
+
         for (int i = 0; i < adjacentCities.size(); i++) {
             System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
         }
-        System.out.println("[2] Challenge Gym leader [" + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + " - " + (CityManager.cities).get(CityManager.currentCity).getGymType() + " type]");
+        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town")) {
+            System.out.println("[2] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
+        }
+        else{
+            System.out.println("[2] Talk to Mom [Your hometown has no gym]");
+        }
+
         System.out.println("[3] Fight Wild Pokémon [" + CityManager.cities.get(CityManager.currentCity).printWildPokemon() + " are common]");
         System.out.println("[4] Player Options");
         System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
@@ -251,16 +259,34 @@ public class GameFlow {
                 }
                 case 2:
                 {
-                    System.out.println("Challenging Gym Leader " + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + "...");
-                    // Implement Gym Leader battle logic here
+                    City currentCity = player.getLocation();
+                    if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town")) {
+                        System.out.println("Challenging Gym Leader " + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + "...");
+                        // Implement Gym Leader battle logic here
 
-                    Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
+                        Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
+                    }
+                    else{
+                        System.out.printf("MOM: \"Oh, %s! You're leaving on your adventure with Pokémon? How\n" +
+                                "exciting! I know you've always dreamed of this day. Remember, the bond\n" +
+                                "you share with your Pokémon is the most important thing. Take care of\n" +
+                                "them, and they'll take care of you. Don't worry about me; I'll be just\n" +
+                                "fine here. I can't wait to hear all about your adventures and the new\n" +
+                                "friends you're going to make. Remember, no matter how far you go, I'm\n" +
+                                "always here for you. Be brave, be kind, and everything will turn out\n" +
+                                "just fine. I'm so proud of you already! Now, go on, your adventure\n" +
+                                "awaits! Oh, and don’t forget to change your underwear every day! Safe\n" +
+                                "travels, my dear!\"\n", player.getPlayerName());
+                        System.out.println("+--------------------------------------------------------------------------------------------+");
+
+                    }
                     break;
                 }
                 case 3:
                 {
                     System.out.println("Encountering wild Pokémon...");
-                    // Implement wild Pokémon encounter logic here
+                    System.out.println("+--------------------------------------------------------------------------------------------+");
+                    FightWildPokemon fight = new FightWildPokemon(Main.currentPlayer, Main.currentPlayer.getLocation());
                     break;
                 }
                 case 4:
@@ -273,32 +299,36 @@ public class GameFlow {
                     System.out.println("e. Exit");
                     System.out.print("Your choice: ");
                     String playerOption = scanner.next();
+                    System.out.println("+--------------------------------------------------------------------------------------------+");
+
                     switch (playerOption)
                     {
                         case "a":
                         {
-                            displayMap();
+                            KantoMap.printMap(Main.currentPlayer.getLocation().getName());
                             break;
                         }
                         case "b":
                         {
-                            // Implement showing player's Pokémon
+                            Main.currentPlayer.showPokemon();
                             break;
                         }
                         case "c":
                         {
-                            // Implement showing player's badges
+                            Main.currentPlayer.showBadges();
                             break;
                         }
                         case "d":
                         {
                             System.out.println("Saving game and exiting..."); // Implement game saving code
+                            System.out.println("+--------------------------------------------------------------------------------------------+");
+
 //                            Player newPlayer = Main.currentPlayer;
 //                            SaveGameManager.addNewPlayer(newPlayer);
 //                            SaveGameManager.saveGame(newPlayer, "save" + (SaveGameManager.getSavedPlayers().size() - 1) + ".json");
 
                             //yer newPlayer = Main.currentPlayer;
-                            System.out.println("Current player = "+ Main.currentPlayer.getPlayerName());
+                            System.out.println("\nSee you again "+ Main.currentPlayer.getPlayerName()+ "!");
 
                             if (Main.currentPlayer.equals(Main.player1)){
                                 SaveGameManager.addNewPlayer(Main.currentPlayer);

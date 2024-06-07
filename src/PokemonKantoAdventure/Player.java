@@ -43,33 +43,36 @@ public class Player {
     }
 
     public void showBadges() {
-        if (badges.isEmpty()) {
-            System.out.println("Your Badges:- None");
-        } else {
-            System.out.println("Your Badges:- " + String.join(", ", badges));
+        System.out.println("Your Badges:");
+
+        if (badges.size() != 0) {
+            for (int i = 0; i < getBadges().size(); i++) {
+                System.out.printf("- %s\n", getBadges().get(i));
+            }
         }
+        else {
+            System.out.println("- None");
+        }
+        System.out.println("+--------------------------------------------------------------------------------------------+");
+
     }
 
-//    public void showPokemon() { // method to show all pokemon yang wujud
-//        if (pokemonTeam.isEmpty()) {
-//            System.out.println("You have no Pokémon.");
-//        }
-//        else {
-//            System.out.println("Your Pokemon: ");
-//            for (int i = 0; i < pokemonTeam.size();i++) {
-//                System.out.println("Pokemon " + (i+1)+ ":");
-//                System.out.println(pokemonTeam.get(i));
-//            }
-//        }
-//    }
+    public void showPokemon() { // method to show all pokemon yang wujud
+        System.out.println("Your Pokémon:");
+        for (int i=0; i<getPokemon().size(); i++){
+            if (getPokemon().get(i).getLevel()>=1 && getPokemon().get(i).getLevel()<=10){
+                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/100 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
+            }else if (getPokemon().get(i).getLevel()>=10 && getPokemon().get(i).getLevel()<=30){
+                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/200 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
+            }else{
+                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/300 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
+            }
+        }
+        System.out.println("+--------------------------------------------------------------------------------------------+");
 
-//    public void displayPokemon(String name){
-//        for(int i=0 ; i<pokemonTeam.size() ; i++){
-//            if(name.equalsIgnoreCase(pokemonTeam.get(i).getName())){
-//                System.out.println(pokemonTeam.get(i));
-//            }
-//        }
-//    }
+    }
+
+
 
 
     // GETTER SETTER METHODS

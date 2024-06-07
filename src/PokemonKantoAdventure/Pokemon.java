@@ -60,17 +60,49 @@ public class Pokemon {
     }
 
     public void gainXp(int amount) {
+        System.out.printf("%s gained %dxp.\n", name, amount);
         xp += amount;
-        if (xp >= 100) {
-            levelUp();
-            xp = xp - 100;
+
+        if (level>=1 && level<=10) {
+
+            if (xp>=100){
+                levelUp();
+                xp = xp - 100;
+            }
+
+            System.out.printf("%s [XP: %d/100]\n\n", name, xp );
+
+        } else if (level>=11 && level<=30){
+
+            if (xp>=200){
+                levelUp();
+                xp = xp - 200;
+            }
+            System.out.printf("%s [XP: %d/200]\n\n", name, xp );
+        } else{
+            if (xp>=300){
+                levelUp();
+                xp = xp - 300;
+            }
+            System.out.printf("%s [XP: %d/300]\n\n", name, xp );
         }
     }
 
     private void levelUp() {
         level++;
         hp += 10;
-        System.out.println(name + " leveled up to level " + level + "!");
+        System.out.println(name + " leveled up!");
+        System.out.printf("%s [Level %d ---> Level %d]", name, level-1, level);
+        updateDamage();
+
+    }
+
+
+    // DAMAGE INCREASE BY 2 EVERYTIME POKEMON LEVEL UP
+    public void updateDamage (){
+        for (int i=0; i<damage.length; i++){
+            damage[i]+=2;
+        }
     }
 
 
@@ -81,17 +113,31 @@ public class Pokemon {
             if (strength[i].equalsIgnoreCase(oppponent.getType())) {             // 20% increase damage
                 baseDamage *= 1.2;
                 System.out.println("It's super effective!");
-                System.out.printf("%s's HP drops significantly. [%s HP: %d/100]\n", oppponent.getName(), oppponent.getName(), oppponent.hp-baseDamage);
+                System.out.printf("%s's HP drops significantly. ",oppponent.getName());
+                if (oppponent.hp-baseDamage>=0){
+                    System.out.printf("[%s HP: %d/100]\n",  oppponent.getName(), oppponent.hp-baseDamage);
+                }
+                System.out.println();
                 break;
             } else if (weakness[i].equalsIgnoreCase(oppponent.getType())) {        // 20% decrease damage
                 baseDamage *= 0.8;
-                System.out.printf("%s's dHP drops slightly. [%s HP: %d/100]\n", oppponent.getName(), oppponent.getName(), oppponent.hp-baseDamage);
-                break;
-            } else{
-                System.out.printf("%s take some damage. [%s HP: %d/100]\n", oppponent.getName(), oppponent.getName(), oppponent.hp-baseDamage);
+                System.out.printf("%s's HP drops slightly. ", oppponent.getName());
+                if (oppponent.hp - baseDamage >= 0) {
+                    System.out.printf("[%s HP: %d/100]\n", oppponent.getName(), oppponent.hp - baseDamage);
+                }
+                System.out.println();
                 break;
             }
         }
+
+        if (baseDamage== damage[index]){
+            System.out.printf("%s take some damage. ",oppponent.getName());
+            if (hp-baseDamage>=0){
+                System.out.printf("[%s HP: %d/100]\n", oppponent.getName(), oppponent.hp-baseDamage);
+            }
+            System.out.println();
+        }
+
 
         return baseDamage;
     }

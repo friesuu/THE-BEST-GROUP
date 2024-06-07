@@ -24,35 +24,9 @@ public class SaveGameManager {
     // Function to save a game process
     public static void saveGame(Player player, String filename) {
 
-//        JSONArray personArray = new JSONArray();
-//        for (int i = 0; i < names.length; i++) {
-//            JSONObject personObject = new JSONObject();
-//            personObject.put("name", names[i]);
-//            personObject.put("age", ages[i]);
-//            personObject.put("email", emails[i]);
-//            personArray.add(personObject);
-//        }
-
-        //TO LOAD JSON
-//        public Player (String playerName, List<Pokemon> pokemon)
-//        ID = ID;
-//        this.name = name;
-//        this.type = type;
-//        this.level = level;
-//        this.move[0] = move1;
-//        this.damage[0] = damage1;
-//        this.move[1] = move2;
-//        this.damage[1] = damage2;
-//        this.strength[0] = strength1;
-//        this.strength[1] = strength2;
-//        this.strength[2] = strength3;
-//        this.weakness[0] = weakness1;
-//        this.weakness[1] = weakness1;
-//        this.weakness[2] = weakness
-
-
         JSONObject saveData = new JSONObject();
         JSONArray savePokemon = new JSONArray();
+        JSONArray savePokemonLevel = new JSONArray();
         JSONObject pokemon = new JSONObject();
         JSONArray saveDefeated = new JSONArray();
         JSONObject defeated = new JSONObject();
@@ -66,9 +40,11 @@ public class SaveGameManager {
         saveData.put("currentLocation", player.getLocation().getName());
         for (int i=0; i<player.getPokemon().size(); i++){
             savePokemon.add(player.getPokemon().get(i).getName());
+            savePokemonLevel.add(player.getPokemon().get(i).getLevel());
             // FOR NOW JUST NAME, LATER ADD LEVELS TOO
         }
         saveData.put("pokemonTeam", savePokemon);
+        saveData.put("pokemonLevel", savePokemonLevel);
 
 
 
@@ -126,6 +102,7 @@ public class SaveGameManager {
             String trainerName = (String) saveData.get("trainerName");
             JSONArray earnedBadges = (JSONArray) saveData.get("earnedBadges");
             JSONArray pokemonTeam = (JSONArray) saveData.get("pokemonTeam");
+            JSONArray pokemonLevel = (JSONArray) saveData.get("pokemonLevel");
             JSONArray defeatedGymLeaders = (JSONArray) saveData.get("defeatedGymLeaders");
             String currentLocation = (String) saveData.get("currentLocation");
 
@@ -139,6 +116,11 @@ public class SaveGameManager {
                         //ADD ON LEVEL BERAPA HERE USING SETLEVEL METHOD
                     }
                 }
+            }
+
+            for (int j=0; j<tempPokemonList.size(); j++){
+                tempPokemonList.get(j).setLevel(Integer.parseInt(pokemonLevel.get(j).toString()));
+
             }
 
             player = new Player(trainerName, tempPokemonList);

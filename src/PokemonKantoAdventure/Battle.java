@@ -27,73 +27,94 @@ public class Battle {
 
     public Battle(Player player, City opponent) {
         this.playersPokemon = player.getPokemon();
-        this.oppsPokemon = opponent.getWildPokemon();
+        this.oppsPokemon = opponent.getGymLeaderPokemon();
+        int i=1;    // trainer turn indicator
+        int j=1;    // opponent turn
+        int k=0;    // trainer pokemon index
+        int l=0;    // opponent pokemon index
+
+        for (int m=0; m<playersPokemon.size(); m++){
+            playersPokemon.get(m).setHp(100);
+        }
+        for (int m=0; m<oppsPokemon.size(); m++){
+            oppsPokemon.get(m).setHp(100);
+        }
 
         System.out.println("You are about to challenge " + opponent.getGymLeader() + "!");
         System.out.println("Prepare yourself for an intense battle!");
         System.out.println("Your Pokemon:");
-        System.out.printf("%s - Level: %d\n", playersPokemon.getFirst().getName(), playersPokemonLevel);
+        System.out.printf("%s - Level: %d\n", playersPokemon.getFirst().getName(), playersPokemon.getFirst().getLevel());
         System.out.println("+--------------------------------------------------------------------------------------------+");
-        battle(player, opponent);
-        int i=1;
-        int j=1;
-        int k=0;
-        while (k < playersPokemon.size()) {
+
+
+
+
+        System.out.println("Battle Start: Trainer "+ player.getPlayerName() + " vs. Gym Leader " + opponent.getGymLeader() + "!");
+        System.out.printf("%s sends out %s [Level %d]!\n\n", opponent.getGymLeader(), oppsPokemon.get(l).getName(), oppsPokemon.get(l).getLevel());
+        System.out.printf("%s is sent out!\n", player.getPokemon().get(k).getName());
+
+        strengthChecker(player.getPokemon().get(k), opponent.getGymLeaderPokemon().get(l));
+
+
+        while (k < playersPokemon.size() && l < oppsPokemon.size()) {
                 // implement while all player pokemon belum habis
 
 
-            while (!playersPokemon.get(k).isFaintedChecker() && !oppsPokemon.get(0).isFaintedChecker()) {
+            //while (!playersPokemon.get(k).isFaintedChecker() && !oppsPokemon.get(l).isFaintedChecker()) {
+            while (true && k < playersPokemon.size() && l < oppsPokemon.size()){
+
+                if (playersPokemon.get(k).isFaintedChecker()){
+                    System.out.println("\n"+playersPokemon.get(k).getName() + " faints!\n");
+                    k++;
+                    i=1;
+                    j=1;
+
+                    if (k<playersPokemon.size()){
+                        System.out.println(playersPokemon.get(k).getName()+ " is sent out!");
+                        strengthChecker(playersPokemon.get(k), oppsPokemon.get(l));
+
+
+                    }
+                    continue;
+
+                }else if (oppsPokemon.get(l).isFaintedChecker()){
+                    System.out.println("\n"+oppsPokemon.get(l).getName() + " faints!\n");
+                    playersPokemon.get(k).gainXp(40);
+                    i=1;
+                    j=1;
+                    l++;
+
+                    if (l<oppsPokemon.size()){
+                        System.out.println( opponent.getGymLeader()+ " sends out "+ oppsPokemon.get(l).getName() + " [Level "+ oppsPokemon.get(l).getLevel()+"]");
+                        System.out.println("You have to defeat all their Pokemon.");
+                        System.out.println("+--------------------------------------------------------------------------------------------+");
+
+                    }
+                    continue;
+                }
 
                 if (i % 2 == 1) {
                     battleRounds(j, playersPokemon.get(k));
-                    action(choice()-1, playersPokemon.get(k));
+                    action(choice()-1, playersPokemon.get(k),oppsPokemon.get(l));
                     i++;
                     i%=2;
                     j++;
                 }else{
-                    action(opponentRound(oppsPokemon.get(0)), oppsPokemon.get(0));
+                    action(opponentRound(oppsPokemon.get(l)), oppsPokemon.get(l), playersPokemon.get(k));
                     i++;
                     i%=2;
                 }
 
             }
 
-            if (playersPokemon.get(k).isFaintedChecker()){
-                System.out.println(playersPokemon.get(k).getName() + " faints!\n");
-
-                //GYM LEADER'S POKEMON WILL GAIN XP KA IF WON THE ROUND?
-            }else if (oppsPokemon.get(0).isFaintedChecker()){
-                System.out.println(oppsPokemon.get(0).getName() + " faints!\n\n");
-                System.out.printf("%s gained 40xp.\n", playersPokemon.get(k).getName() );
-                playersPokemon.get(k).setXp(playersPokemon.get(k).getXp()+ 40);
-                System.out.printf("%s [XP: %d/100]\n\n", playersPokemon.get(k).getName(), playersPokemon.get(k).getXp());
-            }
-
-            k++;
         }
 
-        System.out.println("\nThe battle ended.\n");
+        System.out.println("\nThe battle ended.");
+        System.out.println("+--------------------------------------------------------------------------------------------+");
+
 
     }
 
-    public void battle (Player player, City Opponent) {
-
-        Random random = new Random();
-        System.out.println("Battle Start: Trainer "+ player.getPlayerName() + " vs. Gym Leader " + Opponent.getGymLeader() + "!");
-
-        // IMPLEMENT randomly select pokemon?
-        // btw is this wild pokemon from the city or is this specific to each gym leader.
-        // if specific to eac gym leader; then we have to implement other class for gym leaders' pokemon
-        System.out.printf("%s sends out %s [Level %d]!\n\n", Opponent.getGymLeader(), Opponent.getWildPokemon().get(0).getName(), 0);
-
-        // IMPLEMENT until wild pokemon habis too
-        System.out.printf("%s is sent out!\n", player.getPokemon().get(0).getName());
-
-        //for (int i=0; i<Opponent.getWildPokemon().size(); i++) {
-            strengthChecker(player.getPokemon().get(0), Opponent.getWildPokemon().get(0));
-        //}
-
-    }
 
 
     public int choice () { //make function return which class to call to ?? [change void -> class name (??)]
@@ -108,13 +129,14 @@ public class Battle {
 
     }
 
-    public void action (int decision, Pokemon pokemon){
-        System.out.println("\n"+ pokemon.getName()+ " uses " + pokemon.getMove()[decision]);
+    public void action (int decision, Pokemon pokemon, Pokemon opponent){
+        System.out.println(pokemon.getName()+ " uses " + pokemon.getMove()[decision]);
 
         // I THINK THERE SHOULD BE CONDITION CHECKING HOW MUCH OPP'S XPHP DECREASES TO KNOW EFFECTIVE OR NOT
         //UPDATE : ITS DONE ALREADY IN POKEMON CLASS
         //UPDATE: I AM NOT SURE IF IT CHECKS EFFECTIVE DAMAGE FOR OPPONENT
-        pokemon.setHp(pokemon.getHp()-pokemon.calculateDamage(decision, pokemon));
+        int damage = pokemon.calculateDamage(decision,opponent);
+        opponent.setHp(opponent.getHp()-damage);
     }
 
 
@@ -136,18 +158,18 @@ public class Battle {
 
     public void strengthChecker (Pokemon player, Pokemon opponent){
 
-        for (int j=0; j<playersPokemon.size(); j++){
+        //for (int j=0; j<playersPokemon.size(); j++){
             for (int i=0; i<3; i++) {
                 if (player.getStrength()[i].equalsIgnoreCase(opponent.getType())) {             // 20% increase damage
-                    System.out.println("\nIts" + player.getStrength()[i] + " type is strong against the opponent's " + opponent.getType() );
+                    System.out.println("Its " + player.getStrength()[i].toLowerCase() + " type is strong against the opponent's " + opponent.getName() );
                     break;
 
                 } else if (player.getWeakness()[i].equalsIgnoreCase(opponent.getType())) {        // 20% decrease damage
-                    System.out.println("\nIts" + player.getStrength()[i] + " type is weak against the opponent's " + opponent.getType() );
+                    System.out.println("Its " + player.getStrength()[i].toLowerCase() + " type is weak against the opponent's " + opponent.getName() );
                     break;
                 }
             }
-        }
+        //}
     }
 
 }

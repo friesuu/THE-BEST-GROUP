@@ -14,6 +14,8 @@ import PokemonKantoAdventure.Player;
 import PokemonKantoAdventure.SaveGameManager;
 import org.json.simple.JSONObject;
 
+import javax.sound.midi.Soundbank;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -70,9 +72,23 @@ public class MemoryCartridge {
 
                 String filename = "save" + (saveNumber - 1) + ".json";
                 Player loadedPlayer = SaveGameManager.loadGame(filename);
-                if (loadedPlayer != null) {
-                    GameFlow.switchToLoadedPlayerGame(loadedPlayer);
+
+                while (loadedPlayer == null){
+                    System.out.println("\nThe game is empty. Please enter another game.");
+                    System.out.print("Enter the number of the saved game you want to load : ");
+                    saveNumber = sc.nextInt();
+
+                    filename = "save" + (saveNumber - 1) + ".json";
+                    loadedPlayer = SaveGameManager.loadGame(filename);
                 }
+
+                GameFlow.switchToLoadedPlayerGame(loadedPlayer);
+
+
+
+                System.out.println("\nWelcome back " + loadedPlayer.getPlayerName() + "!\n");
+
+                System.out.println("+--------------------------------------------------------------------------------------------+");
 
                 break;
 
@@ -84,12 +100,11 @@ public class MemoryCartridge {
                 System.out.println("+---------------------------------------------------------------------------------+");
                 System.out.print("Enter the number of the saved game you want to override : ");
                 int input = sc.nextInt();
+                System.out.println("+--------------------------------------------------------------------------------------------+");
 
                 switch (input){
                     case 1:
-                        System.out.println("BEFORE");
                         Main.player1 = new Player(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
-                        System.out.println("AFTER");
                         Main.currentPlayer = Main.player1;
                         //while (true) {
                         gameFlow.intermediate(Main.player1);

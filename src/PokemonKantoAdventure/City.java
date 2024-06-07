@@ -11,8 +11,9 @@ public class City
     private String gymLeader;
     private String gymType;
     private List<Pokemon> wildPokemon = new ArrayList<>();
+    private List<Pokemon> gymLeaderPokemon = new ArrayList<>();
 
-    public City(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> wildPokemon)
+    public City(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> gymLeaderPokemon, List<String> wildPokemons)
     {
         this.name = name;
         this.adjacentCities = adjacentCities;
@@ -27,8 +28,9 @@ public class City
 //            }
 //        }
 
-        setWildPokemon(wildPokemon);
-        printWildPokemon();
+        setWildPokemon(wildPokemons);
+        setGymLeaderPokemon(gymLeaderPokemon);
+
 
 
     }
@@ -58,12 +60,28 @@ public class City
         return wildPokemon;
     }
 
+    public List<Pokemon> getGymLeaderPokemon() {
+        return gymLeaderPokemon;
+    }
+
     public void setWildPokemon(List<String> wildPokemonNames) {
         this.wildPokemon.clear(); // Ensure the list is empty before adding new Pokemon
         for (String name : wildPokemonNames) {
             for (Pokemon pokemon : GameFlow.pokemons) {
                 if (pokemon.getName().equalsIgnoreCase(name)) {
                     this.wildPokemon.add(pokemon);
+                    break; // Break the inner loop once a match is found
+                }
+            }
+        }
+    }
+
+    public void setGymLeaderPokemon(List<String> gymLeaderPokemon) {
+        this.gymLeaderPokemon.clear(); // Ensure the list is empty before adding new Pokemon
+        for (String name : gymLeaderPokemon) {
+            for (Pokemon pokemon : GameFlow.pokemons) {
+                if (pokemon.getName().equalsIgnoreCase(name)) {
+                    this.gymLeaderPokemon.add(pokemon);
                     break; // Break the inner loop once a match is found
                 }
             }

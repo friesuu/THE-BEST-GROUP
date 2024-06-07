@@ -10,25 +10,45 @@
 10,Ekans,Poison,1,Acid,9,Poison Sting,5,Bug,Fairy,Fighting,Ground,Psychic,null
 11,Nidoran,Poison,1,Bite,6,Poison String,5,Bug,Fairy,Fighting,Ground,Psychic,null
 12,Grimer,Poison,1,Poison Jab,10,Mud-Slap,18,Bug,Fairy,Grass,Ground,Psychic,null
-13,Koffing,Poison,1,Tackle,5,Infestataion,10,Bug,Fairy,Fighting,Ground,Psychic,null
+13,Koffing,Poison,1,Tackle,5,Infestation,10,Bug,Fairy,Fighting,Ground,Psychic,null
 14,Porygon,Normal,1,Charge Beam,8,Hidden Power,15,Ghost,null,null,Fighting,null,null
 15,Growlithe,Fire,1,Bite,6,Ember,10,Bug,Fairy,Grass,Ground,Rock,Water
 16,Ponyta,Fire,1,Tackle,5,Ember,10,Bug,Fairy,Ice,Ground,Rock,Water
 17,Psyduck,Water,1,Water Gun,5,Zen Headbutt,12,Fire,Ice,Steel,Electric,Grass,null
-18,Poliwang,Water,1,Mud Shot,5,Bubble,12,Fire,Ice,Steel,Electric,Grass,null
+18,Poliwag,Water,1,Mud Shot,5,Bubble,12,Fire,Ice,Steel,Electric,Grass,null
 19,Krabby,Water,1,Mud Shot,5,Bubble,12,Fire,Ice,Steel,Electric,Grass,null
 20,Horsea,Water,1,Water Gun,5,Bubble,12,Fire,Ice,Steel,Electric,Grass,null
 21,Sandshrew,Ground,1,Scratch,6,Mud Shot,5,Electric,Poison,Rock,Grass,Ice,Water
-22,Diglet,Ground,1,Scratch,6,Mud-Slap,18,Electric,Poison,Rock,Grass,Ice,Water
+22,Diglett,Ground,1,Scratch,6,Mud-Slap,18,Electric,Poison,Rock,Grass,Ice,Water
 23,Cubone,Ground,1,Mud-Slap,18,Rock Smash,15,Electric,Poison,Rock,Grass,Ice,Water
 24,Pikachu,Electric,1,Thunder Shock,5,Quick Attack,8,Electric,Flying,Steel,Ground,null,null
 25,Voltorb,Electric,1,Spark,6,Tackle,5,Electric,Flying,Steel,Ground,null,null
 26,Electabuzz,Electric,1,Thunder Shock,5,Low Kick,6,Electric,Flying,Steel,Ground,null,null
-27,Geodude,Rock/Ground,1,Tackle,5,Rock Throw,12,Electric,Poison,Fire,Grass,Water,Ice
-28,Rhyhorn,Ground/rock,1,Mud-Slap,18,Rock Smash,15,Electric,Poison,Fire,Grass,Water,Ice
-29,Omanyte,Rock/Water,1,Mud Shot,5,Water Gun,5,Fire,Ice,Normal,Grass,Electric,Ground
-30,Kabuto,Rock/Water,1,Mud Shot,5,Scratch,6,Fire,Ice,Normal,Grass,Electric,Ground
+27,Geodude,Rock,1,Tackle,5,Rock Throw,12,Fire,Flying,Ice,Grass,Ground,Water
+28,Rhyhorn,Rock,1,Mud-Slap,18,Rock Smash,15,Fire,Flying,Ice,Grass,Ground,Water
+29,Omanyte,Rock,1,Mud Shot,5,Water Gun,5,Fire,Flying,Ice,Grass,Ground,Water
+30,Kabuto,Rock,1,Mud Shot,5,Scratch,6,Fire,Flying,Ice,Grass,Ground,Water
 31,Abra,Psychic,1,Charge Beam,8,Zen Headbutt,12,Fighting,Psychic,null,Bug,Dark,Ghost
 32,Drowzee,Psychic,1,Pound,7,Confusion,20,Fighting,Psychic,null,Bug,Dark,Ghost
 33,Meowth,Psychic,1,Psycho Cut,5,Confusion,20,Fighting,Psychic,null,Bug,Dark,Ghost
 34,Mew,Psychic,1,Dragon Tail,15,Poison Jab,10,Fighting,Psychic,null,Bug,Dark,Ghost
+35,Scyther,Bug,1,Quick Attack,15,Fury Cutter,20,Dark,Grass,Psychic,Rock,Fire,Flying
+36,Rhydon,Rock,1,Smack Down,15,Bulldoze,20,Fire,Flying,Ice,Grass,Ground,Water
+37,Magmar,Fire,1,Smog,10,Ember,12,Bug,Grass,Ice,Ground,Rock,Water
+38,Ninetales,Fire,1,Quick Attack,8,Flamethrower,12,Bug,Grass,Ice,Ground,Rock,Water
+39,Vulpix,Fire,1,Quick Attack,8,Ember,12,Bug,Grass,Ice,Ground,Rock,Water
+40,Venonat,Bug,1,Bug Buzz,12,Poison Fang,16,Dark,Grass,Psychic,Rock,Fire,Flying
+41,Weepinbell,Grass,1,Vine Whip,7,Acid,9,Electric,Grass,Ground,Bug,Fire,Ice
+42,Gloom,Grass,1,Absorb,10,Mega Drain,14,Electric,Grass,Ground,Bug,Fire,Ice
+43,Belossom,Grass,1,Mega Drain,12,Giga Drain,18,Electric,Grass,Ground,Bug,Fire,Ice
+44,Bayleef,Grass,1,Razor Leaf,13,Magical Leaf,18,Electric,Grass,Ground,Bug,Fire,Ice
+45,Raichu,Electric,1,Nuzzle,5,Spark,12,Electric,Flying,Steel,Ground,null,null
+46,Pichu,Electric,1,Nuzzle,5,Thunder Shock,10,Electric,Flying,Steel,Ground,null,null
+47,Staryu,Water,1,Water Gun,10,Brine,14,Fire,Ice,Steel,Electric,Grass,null
+48,Starmie,Water,1,Water Gun,8,Brine,12,Fire,Ice,Steel,Electric,Grass,null
+49,Corsola,Water,1,Tackle,5,Bubble,12,Fire,Ice,Steel,Electric,Grass,null
+50,Onix,Ground,1,Sand Tomb,9,Dig,15,Electric,Poison,Rock,Grass,Ice,Water
+51,Roggenrola,Rock,1,Smack Down,9,Rock Slide,14,Fire,Flying,Ice,Grass,Ground,Water
+52,Regirock,Rock,1,Rock Throw,8,Rock Slide,14,Fire,Flying,Ice,Grass,Ground,Water
+53,Alakazam,Psychic,1,Confusion,9,Psyshock,13,Fighting,Psychic,null,Bug,Dark,Ghost
+54,Mewtwo,Psychic,1,Confusion,9,Psycho Cut,14,Fighting,Psychic,null,Bug,Dark,Ghost
