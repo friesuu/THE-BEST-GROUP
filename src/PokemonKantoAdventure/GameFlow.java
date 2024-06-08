@@ -7,12 +7,13 @@ import PokemonKantoAdventure.Pokemon;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class GameFlow {
 
-    static Pokemon[] pokemons = new Pokemon[54];
+    static Pokemon[] pokemons = new Pokemon[58];
 
     public static char[][] maze =
             {
@@ -122,6 +123,9 @@ public class GameFlow {
         }
         if (player.getLocation().getName().equalsIgnoreCase("Saffron City")) {
             System.out.println("[" + counter++ + "] Rival's Race");
+        }
+        if (player.getLocation().getName().equalsIgnoreCase("Fuschia City")){
+            System.out.println("[" + counter++ + "] Safari Zone");
         }
         System.out.println("+--------------------------------------------------------------------------------------------+");
         nextStep(player, choice(), adjacentCities);
@@ -356,6 +360,37 @@ public class GameFlow {
 
                         System.out.println("\nThe battle has begun! Your rival Gary has challenged you to a race to\n" + tt + "\n\n" + sp + "\n\nGoodluck on your race!");
 
+                    }
+
+                    if (Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Fuschia City")){
+                        Scanner sc = new Scanner(System.in);
+
+                        // List to hold the Pokemon
+                        List<String> pokemonList = new ArrayList<>();
+
+                        // Prompt user to enter Pokemon names
+                        System.out.println("+---------------------------------------------------------------------------------+");
+                        System.out.println("Welcome to the Safari Zone! Today's challenge : Sort the Pokémon!");
+                        System.out.println("+---------------------------------------------------------------------------------+");
+                        System.out.print("Enter the Pokémon in your party (separated by comma) : ");
+                        String input = sc.nextLine();
+                        String[] pokemonArray = input.split(",");
+                        for (String pokemon : pokemonArray) {
+                            pokemonList.add(pokemon.trim());
+                        }
+
+                        // Display the pokemon entered
+                        System.out.println("\nYou entered : " + String.join(",", pokemonList));
+                        System.out.println("\nSorting your Pokémon according to their unique preferences...");
+
+                        // Sort the Pokemon according to the given conditions
+                        SafariZone.sortPokemon(pokemonList);
+                        //List<String> sortedPokemonList = sortPokemon(pokemonList);
+
+                        System.out.println("\n+---------------------------------------------------------------------------------+");
+                        System.out.println("Your Pokémon are now sorted! Enjoy your adventure in the Safari Zone!");
+                        System.out.println("+---------------------------------------------------------------------------------+");
+                        //System.out.println("Final Sorted List : " + sortedPokemonList);
                     }
                     break;
 

@@ -52,3 +52,7 @@
 52,Regirock,Rock,1,Rock Throw,8,Rock Slide,14,Fire,Flying,Ice,Grass,Ground,Water,50
 53,Alakazam,Psychic,1,Confusion,9,Psyshock,13,Fighting,Psychic,null,Bug,Dark,Ghost,120
 54,Mewtwo,Psychic,1,Confusion,9,Psycho Cut,14,Fighting,Psychic,null,Bug,Dark,Ghost,130
+55,Snorlax,Normal,1,Covet,8,Last Resort,14,Ghost,null,null,Fighting,null,null,30
+56,Jigglypuff,Fairy,1,Disarming Voice,6,Body Slam,8,Ghost,Dragon,null,Poison,Steel,null,20
+57,Eevee,Normal,1,Quick Attack,8,Take Down,9,Ghost,null,null,Fighting,null,null,75
+58,Machop,Figting,1,Vital Throw,7,Cross Chop,10,null,null,null,Flying,Psychic,Fairy,35
