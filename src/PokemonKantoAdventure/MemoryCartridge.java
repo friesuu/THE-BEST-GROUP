@@ -41,18 +41,6 @@ public class MemoryCartridge {
 //        }
 //    }
 
-    // Function to display main menu
-    public static void displayMainMenu() {
-        System.out.println("+---------------------------------------------------------------------------------+");
-        System.out.println("Welcome to Pokémon - Kanto Adventures");
-        System.out.println("+---------------------------------------------------------------------------------+");
-        System.out.println("[1] Load PokemonKantoAdventure.Game");
-        //System.out.println("        a. Save1-Amaan    b.Save2-empty       c.Save3-empty");
-        System.out.println("[2] Start a New Adventure");
-        //System.out.println("        a.Save1-Override    b.Save2-new         c.Save3-new");
-        System.out.println("[3] Exit");
-        System.out.println("+---------------------------------------------------------------------------------+");
-    }
 
     public static void getUserSelection() {
         //Game game = new Game();

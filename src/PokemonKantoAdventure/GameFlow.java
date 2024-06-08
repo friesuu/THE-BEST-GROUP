@@ -97,33 +97,32 @@ public class GameFlow {
     // this method is to print out player's choices for their next move
     public void intermediate (Player player){
 
+        int counter =1;
         System.out.println("You are currently in " + player.getLocation().getName());
         System.out.println("+--------------------------------------------------------------------------------------------+");
-
-
-        //later need to make the cities to be dynamic based on where the player is.
-        // System.out.printf("    %-20s %-20s %n", "a. Cerulean PokemonKantoAdventure.City", "b. Viridian PokemonKantoAdventure.City");
-
-
         List<String> adjacentCities = (CityManager.cities).get(CityManager.currentCity).getAdjacentCities();
         City currentCity = player.getLocation();
-        System.out.println("[1] Move to:");
+        System.out.println("[" + counter++ + "] Move to:");
 
         for (int i = 0; i < adjacentCities.size(); i++) {
             System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
         }
-        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town")) {
-            System.out.println("[2] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
+        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town") ) {
+            System.out.println("[" + counter++ + "] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
         }
-        else{
-            System.out.println("[2] Talk to Mom [Your hometown has no gym]");
+        else if (currentCity.getName().equalsIgnoreCase("Pallet Town")){
+            System.out.println("[" + counter++ + "] Talk to Mom [Your hometown has no gym]");
         }
 
-        System.out.println("[3] Fight Wild Pokémon [" + CityManager.cities.get(CityManager.currentCity).printWildPokemon() + " are common]");
-        System.out.println("[4] Player Options");
+        System.out.println("[" + counter++ + "] Fight Wild Pokémon [" + player.getLocation().printWildPokemon() + " are common]");
+        System.out.println("[" + counter++ + "] Player Options");
         System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
-        System.out.println("[5] PokeMaze");
-
+        if (player.getLocation().getName().equalsIgnoreCase("Lavender Town")) {
+            System.out.println("[" + counter++ + "] PokeMaze");
+        }
+        if (player.getLocation().getName().equalsIgnoreCase("Saffron City")) {
+            System.out.println("[" + counter++ + "] Rival's Race");
+        }
         System.out.println("+--------------------------------------------------------------------------------------------+");
         nextStep(player, choice(), adjacentCities);
         //i dont remember wat this was for?
@@ -150,19 +149,6 @@ public class GameFlow {
             System.out.printf("[%d] %s [%s - Level %d]\n", i+1, pokemons[i].getName(), pokemons[i].getType(), pokemons[i].getLevel());
         }
         System.out.println("+--------------------------------------------------------------------------------------------+");
-//        System.out.print("Your choice: ");
-//        String decision = choice();
-//        int chosenID=0;
-//
-//        for (int i=0; i<3; i++){
-//            if (decision.equalsIgnoreCase(Integer.toString(TESTER.ID[i]))){
-//                chosenID=i;
-//                System.out.printf("OAK:     You chose %s, an amazing choice. Best of luck!\n", TESTER.name[chosenID]);
-//            }
-//        }
-
-//        player1 = new PokemonKantoAdventure.Player(namePlayer, TESTER.name[chosenID], "Pallet Town");
-//        System.out.println("+--------------------------------------------------------------------------------------------+");
 
         return namePlayer;
     }
@@ -196,31 +182,8 @@ public class GameFlow {
             //FileReader pokemonlist = new FileReader ("D:\\DEGREE\\1ST YEAR\\net code\\DUITRIA\\LOCATIONS.txt");
 
             while (pokemonlist.hasNextLine()) {
-
-
                 String[] pokemonRead = pokemonlist.nextLine().split(",");
-
-                // array size to be changed or array change to arraylist
-
-                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13]);
-
-//                id[i] = Integer.parseInt(pokemonRead[0]);
-//                name[i] = pokemonRead[1];
-//                type[i] = pokemonRead[2];
-//                level[i] = Integer.parseInt(pokemonRead[3]);
-//                move1[i] = pokemonRead[4];
-//                damage1[i] = Integer.parseInt(pokemonRead[5]);
-//                move2[i] = pokemonRead[6];
-//                damage2[i] = Integer.parseInt(pokemonRead[7]);
-//                strength1[i] = pokemonRead[8];
-//                strength2[i] = pokemonRead[9];
-//                strength3[i] = pokemonRead[10];
-//                weakness1[i] = pokemonRead[11];
-//                weakness2[i] = pokemonRead[12];
-//                weakness3[i] = pokemonRead[13];
-//
-//                System.out.println(name[i] + " " + type[i] + " " + level[i]);
-
+                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13], Integer.parseInt(pokemonRead[14]));
                 i++;
             }
 
@@ -233,11 +196,6 @@ public class GameFlow {
     public  void nextStep (Player player, String decision, List<String> adjacentCities){
 
         Scanner scanner = new Scanner(System.in);
-//        if (decision.equalsIgnoreCase("2")){
-//
-//            //later need to make the opponent to be dynamic based on where the player is.
-//            PokemonKantoAdventure.Battle battle = new PokemonKantoAdventure.Battle (player, "Brock");
-//        }
 
         switch (Integer.parseInt(decision))
             {
@@ -262,7 +220,7 @@ public class GameFlow {
                     City currentCity = player.getLocation();
                     if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town")) {
                         System.out.println("Challenging Gym Leader " + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + "...");
-                        // Implement Gym Leader battle logic here
+                        System.out.println("+--------------------------------------------------------------------------------------------+");
 
                         Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
                     }
@@ -291,6 +249,40 @@ public class GameFlow {
                 }
                 case 4:
                 {
+                    if (Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Lavender Town")) {
+                        int[] start = {1, 1};
+                        int[] end = {8, 15};
+
+                        MazeGame game = new MazeGame(maze, start, end);
+                        Scanner keyboard = new Scanner(System.in);
+
+                        System.out.println("Welcome to the PokeMaze Challenge!");
+                        while (true) {
+                            game.displayMaze();
+                            System.out.print("Enter direction (up, down, left, right): ");
+                            String direction = keyboard.nextLine();
+
+                            if (game.move(direction)) {
+                                if (game.isCaughtByGhost(game.currentPosition)) {
+                                    game.displayMaze();
+                                    System.out.println("\nOh no! You encountered a Ghastly and got caught.");
+                                    System.out.println("Game Over.");
+                                    System.out.println("+--------------------------------------------------------------------------------------------+");
+
+                                    break;
+                                }
+                                if (game.hasReachedEnd()) {
+                                    game.displayMaze();
+                                    System.out.println("Congratulations! You've reached the end of the maze.");
+                                    System.out.println("+--------------------------------------------------------------------------------------------+");
+                                    break;
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+
                     System.out.println("Player Options:");
                     System.out.println("a. Show map");
                     System.out.println("b. Show My Pokémon");
@@ -357,38 +349,16 @@ public class GameFlow {
                 }
                 case 5:
                 {
-                    int[] start = {1, 1};
-                    int[] end = {8, 15};
+                    if (Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Saffron City")) {
+                        Dijkstra dijkstra = new Dijkstra();
+                        String tt = dijkstra.getRandomTargetTown();
+                        String sp = dijkstra.getShortestPath();
 
-                    MazeGame game = new MazeGame(maze, start, end);
-                    Scanner keyboard = new Scanner(System.in);
+                        System.out.println("\nThe battle has begun! Your rival Gary has challenged you to a race to\n" + tt + "\n\n" + sp + "\n\nGoodluck on your race!");
 
-                    System.out.println("Welcome to the PokeMaze Challenge!");
-                    while (true)
-                    {
-                        game.displayMaze();
-                        System.out.print("Enter direction (up, down, left, right): ");
-                        String direction = keyboard.nextLine();
-
-                        if (game.move(direction))
-                        {
-                            if (game.isCaughtByGhost(game.currentPosition))
-                            {
-                                game.displayMaze();
-                                System.out.println("Oh no! You encountered a Ghastly and got caught.");
-                                System.out.println("Game Over.");
-                                break;
-                            }
-                            if (game.hasReachedEnd())
-                            {
-                                game.displayMaze();
-                                System.out.println("Congratulations! You've reached the end of the maze.");
-                                break;
-                            }
-                        }
                     }
-
                     break;
+
                 }
                 default:
                 {

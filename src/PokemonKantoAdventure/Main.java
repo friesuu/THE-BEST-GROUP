@@ -41,12 +41,8 @@ public class Main {
         gameFlow.setPokemon();
         cityManager = new CityManager();
         gameFlow.start();
-
-
         MemoryCartridge.getUserSelection();
 
-//        System.out.println("HEREEEEEEEEEEEE");
-////        System.out.println(player1.printPokemon());
         while (true) {
             gameFlow.intermediate(currentPlayer);
         }

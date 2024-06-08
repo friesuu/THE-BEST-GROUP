@@ -1,4 +1,4 @@
-package PokemonKantoAdventure;//package assigment;
+package PokemonKantoAdventure;
 
 import java.util.*;
 
@@ -31,13 +31,13 @@ class Edge{
     }
 }
 
-public class Dijkstra{
+public class Dijkstra {
     private Vertex randomTargetTown;
     private List<Vertex> path;
     private Vertex Saffron;
     private List<Vertex> vertices;
 
-    public static void computePaths(Vertex source){
+    public static void computePaths(Vertex source) {
         source.minDistance = 0;
         PriorityQueue<Vertex> vertexQueue = new PriorityQueue<>();
         vertexQueue.offer(source);
@@ -45,15 +45,14 @@ public class Dijkstra{
         while (!vertexQueue.isEmpty()) {
             Vertex u = vertexQueue.poll();
 
-            // Visit each edge adj
-            for (Edge e : u.adjacencies){
+            for (Edge e : u.adjacencies) {
                 Vertex v = e.target;
                 int weight = e.weight;
                 int distanceThroughU = u.minDistance + weight;
                 if (distanceThroughU < v.minDistance) {
                     vertexQueue.remove(v);
 
-                    v.minDistance = distanceThroughU ;
+                    v.minDistance = distanceThroughU;
                     v.previous = u;
                     vertexQueue.add(v);
                 }
@@ -61,40 +60,42 @@ public class Dijkstra{
         }
     }
 
-    public static Vertex randomTarget(List<Vertex> vertices){
-        int numberOfSelections = new Random().nextInt(vertices.size()); // ensure at least 1 selection
-        Vertex randomNode = vertices.get(numberOfSelections); // select the first element of the shuffled list
+    public static Vertex randomTarget(List<Vertex> vertices) {
+
+        int numberOfSelections = new Random().nextInt(vertices.size()-4);
+        Vertex randomNode = vertices.get(numberOfSelections);
+
         return randomNode;
     }
 
-    public static List<Vertex> getShortestPathTo(Vertex target){
-        List<Vertex> path = new ArrayList<Vertex>();
+    public static List<Vertex> getShortestPathTo(Vertex target) {
+        List<Vertex> path = new ArrayList<>();
         for (Vertex vertex = target; vertex != null; vertex = vertex.previous)
             path.add(vertex);
 
         Collections.reverse(path);
         return path;
     }
+
     public Dijkstra() {
         initializeGraph();
         computePaths(Saffron);
         randomTargetTown = randomTarget(vertices);
-        //System.out.println("Distance to " + randomTargetTown + ": " + randomTargetTown.minDistance);
         path = getShortestPathTo(randomTargetTown);
-        //System.out.println("Path: " + path);
     }
 
     public void initializeGraph() {
-        Saffron = new Vertex("Saffron PokemonKantoAdventure.City");
-        Vertex Celadon = new Vertex("Celadon PokemonKantoAdventure.City");
-        Vertex Cerulean = new Vertex("Cerulean PokemonKantoAdventure.City");
+        Saffron = new Vertex("Saffron City");
+        Vertex Celadon = new Vertex("Celadon City");
+        Vertex Cerulean = new Vertex("Cerulean City");
         Vertex Lavender = new Vertex("Lavender Town");
-        Vertex Vermillion = new Vertex("Vermillion PokemonKantoAdventure.City");
-        Vertex Fuschia = new Vertex("Fuschia PokemonKantoAdventure.City");
+        Vertex Vermillion = new Vertex("Vermillion City");
+        Vertex Fuschia = new Vertex("Fuschia City");
         Vertex Cinnabar = new Vertex("Cinnabar Island");
         Vertex Pallet = new Vertex("Pallet Town");
-        Vertex Viridian = new Vertex("Viridian PokemonKantoAdventure.City");
-        Vertex Pewter = new Vertex("Pewter PokemonKantoAdventure.City");
+        Vertex Viridian = new Vertex("Viridian City");
+        Vertex Pewter = new Vertex("Pewter City");
+
 
         Saffron.adjacencies.add(new Edge(Celadon, 4));
         Saffron.adjacencies.add(new Edge(Cerulean, 6));
@@ -135,27 +136,25 @@ public class Dijkstra{
         Pewter.adjacencies.add(new Edge(Cerulean, 12));
 
         vertices = new ArrayList<>();
-        Collections.addAll(vertices, Celadon, Cerulean, Lavender, Vermillion, Fuschia, Cinnabar, Pallet, Viridian, Pewter);
+        Collections.addAll(vertices, Fuschia, Cinnabar, Pallet, Viridian, Pewter, Celadon, Cerulean, Lavender, Vermillion);
     }
 
-    // Helper method to convert path list to string
     private String getPathAsString() {
         StringBuilder pathString = new StringBuilder();
         for (Vertex vertex : path) {
             pathString.append(vertex).append(" -> ");
         }
         if (pathString.length() > 0) {
-            pathString.setLength(pathString.length() - 4); // Remove the last arrow
+            pathString.setLength(pathString.length() - 4);
         }
         return pathString.toString();
     }
 
-    public String getRandomTargetTown(){
-        return ""+randomTargetTown;
+    public String getRandomTargetTown() {
+        return "" + randomTargetTown;
     }
 
-    public String getShortestPath(){
-        return "Shortest path: \n"+getPathAsString();
+    public String getShortestPath() {
+        return "Shortest path: \n" + getPathAsString();
     }
-
 }

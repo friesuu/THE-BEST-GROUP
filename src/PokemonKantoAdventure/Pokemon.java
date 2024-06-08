@@ -4,24 +4,7 @@ import java.sql.SQLOutput;
 
 public class Pokemon {
 
-    //THIS CLASS SHOULD BE STRICLY FOR SIMPAN DATAS ABOUT ALL THE POKEMONS, NOT THE PLAYER'S POKEMON
-
-//    private int[] ID = new int[4];
-//    private String[] pokemonName = new String[4];
-//    private String[] type = new String[4];
-//    private int[] level = new int[4];
-//    private String[] move1 = new String[4];
-//    private int[] damage1 = new int[4];
-//    private String[] move2 = new String[4];
-//    private int[] damage2 = new int[4];
-//    private String[] strength1 = new String[4];
-//    private String[] strength2 = new String[4];
-//    private String[] strength3 = new String[4];
-//    private String[] weakness1 = new String[4];
-//    private String[] weakness2 = new String[4];
-//    private String[] weakness3 = new String[4];
-
-    private int ID, level;
+    private int ID, level, speed;
     private String name, type;
     private int hp;
     private int xp;
@@ -31,12 +14,12 @@ public class Pokemon {
     private String[] weakness = new String[3];
 
 
-    public Pokemon(int ID, String name, String type, int level, String move1, int damage1, String move2, int damage2, String strength1, String strength2, String strength3, String weakness1, String weakness2, String weakness3){
+    public Pokemon(int ID, String name, String type, int level, String move1, int damage1, String move2, int damage2, String strength1, String strength2, String strength3, String weakness1, String weakness2, String weakness3, int speed){
         this.ID = ID;
         this.name = name;
         this.type = type;
         this.level = level;
-        this.hp = 100; //STARTING HP SHOULD BE 100 RIGHT???
+        this.hp = 100;
         this.xp = 0;
         this.move[0] = move1;
         this.damage[0] = damage1;
@@ -48,7 +31,7 @@ public class Pokemon {
         this.weakness[0] = weakness1;
         this.weakness[1] = weakness1;
         this.weakness[2] = weakness3;
-
+        this.speed = speed;
     }
 
     public Pokemon(String name, String type, int level, int hp, int xp) {
@@ -132,7 +115,7 @@ public class Pokemon {
 
         if (baseDamage== damage[index]){
             System.out.printf("%s take some damage. ",oppponent.getName());
-            if (hp-baseDamage>=0){
+            if (oppponent.hp-baseDamage>=0){
                 System.out.printf("[%s HP: %d/100]\n", oppponent.getName(), oppponent.hp-baseDamage);
             }
             System.out.println();
@@ -241,5 +224,13 @@ public class Pokemon {
 
     public void setXp(int xp) {
         this.xp = xp;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

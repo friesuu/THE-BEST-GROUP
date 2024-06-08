@@ -28,6 +28,7 @@ public class Battle {
     public Battle(Player player, City opponent) {
         this.playersPokemon = player.getPokemon();
         this.oppsPokemon = opponent.getGymLeaderPokemon();
+
         int i=1;    // trainer turn indicator
         int j=1;    // opponent turn
         int k=0;    // trainer pokemon index
@@ -61,7 +62,7 @@ public class Battle {
 
 
             //while (!playersPokemon.get(k).isFaintedChecker() && !oppsPokemon.get(l).isFaintedChecker()) {
-            while (true && k < playersPokemon.size() && l < oppsPokemon.size()){
+            while (k < playersPokemon.size() && l < oppsPokemon.size()){
 
                 if (playersPokemon.get(k).isFaintedChecker()){
                     System.out.println("\n"+playersPokemon.get(k).getName() + " faints!\n");
@@ -93,16 +94,30 @@ public class Battle {
                     continue;
                 }
 
-                if (i % 2 == 1) {
-                    battleRounds(j, playersPokemon.get(k));
-                    action(choice()-1, playersPokemon.get(k),oppsPokemon.get(l));
-                    i++;
-                    i%=2;
-                    j++;
+                if (turnChecker(playersPokemon.get(k),oppsPokemon.get(l)) == playersPokemon.get(k)) {
+                    if (i % 2 == 1) {
+                        battleRounds(j, playersPokemon.get(k));
+                        action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
+                        i++;
+                        i %= 2;
+                        j++;
+                    } else {
+                        action(opponentRound(oppsPokemon.get(l)), oppsPokemon.get(l), playersPokemon.get(k));
+                        i++;
+                        i %= 2;
+                    }
                 }else{
-                    action(opponentRound(oppsPokemon.get(l)), oppsPokemon.get(l), playersPokemon.get(k));
-                    i++;
-                    i%=2;
+                    if (i % 2 == 0) {
+                        battleRounds(j, playersPokemon.get(k));
+                        action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
+                        i++;
+                        i %= 2;
+                        j++;
+                    } else {
+                        action(opponentRound(oppsPokemon.get(l)), oppsPokemon.get(l), playersPokemon.get(k));
+                        i++;
+                        i %= 2;
+                    }
                 }
 
             }
@@ -170,6 +185,17 @@ public class Battle {
                 }
             }
         //}
+    }
+
+    public Pokemon turnChecker (Pokemon player, Pokemon opponent){
+
+        if (player.getSpeed() >= opponent.getSpeed()){
+            return player;
+        }
+        else{
+            return opponent;
+        }
+
     }
 
 }
