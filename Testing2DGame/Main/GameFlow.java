@@ -133,6 +133,10 @@ public class GameFlow
         else if (currentCity.getName().equalsIgnoreCase("Pallet Town")){
             System.out.println("[" + counter++ + "] Talk to Mom [Your hometown has no gym]");
         }
+        else if(currentCity.getName().equalsIgnoreCase("Lavender Town"))
+        {
+            System.out.println("[" + counter++ + "] No option");
+        }
 
         System.out.println("[" + counter++ + "] Fight Wild Pokémon [" + player.getLocation().printWildPokemon() + " are common]");
         System.out.println("[" + counter++ + "] Player Options");
@@ -151,40 +155,56 @@ public class GameFlow
         //i dont remember wat this was for?
     }
 
-    public void intermediate (Player1 player, String objectName){
-
-        int counter = 1;
-        System.out.println("You are currently in " + objectName);
-        System.out.println("+--------------------------------------------------------------------------------------------+");
-        List<String> adjacentCities = (CityManager.cities).get(objectName).getAdjacentCities();
-        City currentCity = player.getLocation();
-        // System.out.println("[" + counter++ + "] Move to:");
-
-        // for (int i = 0; i < adjacentCities.size(); i++) {
-        //     System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
-        // }
-        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town") ) {
-            System.out.println("[" + counter++ + "] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
-        }
-        else if (currentCity.getName().equalsIgnoreCase("Pallet Town")){
-            System.out.println("[" + counter++ + "] Talk to Mom [Your hometown has no gym]");
-        }
-
-        System.out.println("[" + counter++ + "] Fight Wild Pokémon [" + player.getLocation().printWildPokemon() + " are common]");
-        System.out.println("[" + counter++ + "] Player Options");
-        System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
-        if (objectName == "Lavender Town") {
-            System.out.println("[" + counter++ + "] PokeMaze");
-        }
-        if (player.getLocation().getName().equalsIgnoreCase("Saffron City")) {
-            System.out.println("[" + counter++ + "] Rival's Race");
-        }
-        if (player.getLocation().getName().equalsIgnoreCase("Fuschia City")){
-            System.out.println("[" + counter++ + "] Safari Zone");
-        }
-        System.out.println("[" + counter++ + "] Exit to map (GUI)");
-        System.out.println("+--------------------------------------------------------------------------------------------+");
-        nextStep(player, choice(), adjacentCities, objectName);
+    public void intermediate (Player1 player, String objectName)
+    {
+            int counter = 1;
+            System.out.println("You are currently in " + objectName);
+            System.out.println("+--------------------------------------------------------------------------------------------+");
+            List<String> adjacentCities = (CityManager.cities).get(objectName).getAdjacentCities();
+            City currentCity = player.getLocation();
+            // System.out.println("[" + counter++ + "] Move to:");
+    
+            // for (int i = 0; i < adjacentCities.size(); i++) {
+            //     System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
+            // }
+            if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town") ) {
+                System.out.println("[" + counter++ + "] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
+            }
+            else if (currentCity.getName().equalsIgnoreCase("Pallet Town")){
+                System.out.println("[" + counter++ + "] Talk to Mom [Your hometown has no gym]");
+            }
+            else if(currentCity.getName().equalsIgnoreCase("Lavender Town"))
+            {
+                System.out.println("[" + counter++ + "] No option");
+            }
+    
+            System.out.println("[" + counter++ + "] Fight Wild Pokémon [" + player.getLocation().printWildPokemon() + " are common]");
+            System.out.println("[" + counter++ + "] Player Options");
+            System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
+        
+            if (objectName == "Lavender Town") 
+            {
+                System.out.println("[" + counter++ + "] PokeMaze");
+            }
+            if (player.getLocation().getName().equalsIgnoreCase("Saffron City")) 
+            {
+                System.out.println("[" + counter++ + "] Rival's Race");
+            }
+            if (player.getLocation().getName().equalsIgnoreCase("Fuschia City"))
+            {
+                System.out.println("[" + counter++ + "] Safari Zone");
+            }
+            if(!(objectName == "Lavender Town") && !player.getLocation().getName().equalsIgnoreCase("Fuschia City") && !player.getLocation().getName().equalsIgnoreCase("Saffron City"))
+            {
+                System.out.println("[" + counter++ + "] No option");
+            }
+            System.out.println("[" + counter++ + "] Exit to map (GUI)");
+            System.out.println("+--------------------------------------------------------------------------------------------+");
+    
+        
+            nextStep(player, adjacentCities, objectName);
+        
+        
         //i dont remember wat this was for?
     }
 
@@ -254,14 +274,16 @@ public class GameFlow
         }
     }
 
-    public void nextStep (Player1 player, String decision, List<String> adjacentCities, String objectName)
+    public void nextStep (Player1 player, List<String> adjacentCities, String objectName)
     {
         Scanner scanner = new Scanner(System.in);
 
-        while(true)
+        boolean condition = false;
+
+        outer:
+        while(!condition)
         {
-            outer:
-            switch (Integer.parseInt(decision))
+            switch (Integer.parseInt(choice()))
                 {
                     // case 1:
                     // {
@@ -288,6 +310,11 @@ public class GameFlow
     
                             Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
                         }
+                        else if(currentCity.getName().equalsIgnoreCase("Lavender Town"))
+                        {
+                            System.out.println("INVALID OPTION");
+                            break;
+                        }
                         else{
                             System.out.printf("MOM: \"Oh, %s! You're leaving on your adventure with Pokémon? How\n" +
                                     "exciting! I know you've always dreamed of this day. Remember, the bond\n" +
@@ -302,14 +329,15 @@ public class GameFlow
                             System.out.println("+--------------------------------------------------------------------------------------------+");
     
                         }
-                        break outer;
+
+                        break;
                     }
                     case 2:
                     {
                         System.out.println("Encountering wild Pokémon...");
                         System.out.println("+--------------------------------------------------------------------------------------------+");
                         FightWildPokemon fight = new FightWildPokemon(Main.currentPlayer, Main.currentPlayer.getLocation());
-                        break outer;
+                        break;
                     }
                     case 3:
                     {
@@ -409,7 +437,7 @@ public class GameFlow
                             default:
                                 System.out.println("Invalid option.");
                         }
-                        break outer;
+                        break;
                     }
                     case 4:
                     {
@@ -444,8 +472,7 @@ public class GameFlow
                                     }
                                 }
                             }
-    
-                            break;
+                            break outer;
                         }
     
                         if (Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Saffron City")) {
@@ -487,14 +514,20 @@ public class GameFlow
                             System.out.println("Your Pokémon are now sorted! Enjoy your adventure in the Safari Zone!");
                             System.out.println("+---------------------------------------------------------------------------------+");
                             //System.out.println("Final Sorted List : " + sortedPokemonList);
+                            break outer;
                         }
-                        break outer;
+
+                        if(!Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Lavender Town") && !Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Saffron City") && !Main.currentPlayer.getLocation().getName().equalsIgnoreCase("Fuschia City"))
+                        {
+                            System.out.println("Invalid Option!");
+                        }
+                        break;
                     }
                     case 5:
                     {
                         System.out.println("Exited the town. Go back to GUI to go to another town");
-                        // condition = false;
-                        break;
+                        condition = true;
+                        break outer;
                     }
                     default:
                     {
@@ -502,9 +535,9 @@ public class GameFlow
                     }
 
                 }
-                break;
-
+                
         }
+        
     }
 
     private static void displayMap() {

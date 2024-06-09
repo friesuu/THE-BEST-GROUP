@@ -6,23 +6,25 @@ import javax.imageio.ImageIO;
 
 import Testing2DGame.Main.GamePanel;
 
-public class Obj_Grass extends SuperObject
+public class Obj_LavenderTown extends SuperObject
 {
     GamePanel panel;
 
-    public Obj_Grass(GamePanel panel)
+    public Obj_LavenderTown(GamePanel panel)
     {
         this.panel = panel;
-        name = "Grass";
+        name = "Lavender Town";
         
         try
         {
-            image = ImageIO.read(getClass().getResourceAsStream("./grass.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("./town.png"));
             uTool.scaleImage(image, panel.tileSize, panel.tileSize);
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
+
+        collision = true;
     }
 }

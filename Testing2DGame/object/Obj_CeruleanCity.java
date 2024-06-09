@@ -6,18 +6,18 @@ import javax.imageio.ImageIO;
 
 import Testing2DGame.Main.GamePanel;
 
-public class ObjectKey extends SuperObject
+public class Obj_CeruleanCity extends SuperObject 
 {
     GamePanel panel;
 
-    public ObjectKey(GamePanel panel)
+    public Obj_CeruleanCity(GamePanel panel)
     {
         this.panel = panel;
-        name = "Lavender Town";
+        name = "Cerulean City";
         
         try
         {
-            image = ImageIO.read(getClass().getResourceAsStream("./key.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("./town.png"));
             uTool.scaleImage(image, panel.tileSize, panel.tileSize);
         }
         catch(IOException e)

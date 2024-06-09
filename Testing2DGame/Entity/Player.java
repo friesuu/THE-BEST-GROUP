@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import Testing2DGame.Main.City;
 import Testing2DGame.Main.CityManager;
 import Testing2DGame.Main.GameFlow;
 import Testing2DGame.Main.GamePanel;
@@ -81,14 +82,14 @@ public class Player extends Entity
 
     public void getPlayerImage()
     {
-        up1 = setup("boy_up_1");
-        up2 = setup("boy_up_2");
-        down1 = setup("boy_down_1");
-        down2 = setup("boy_down_2");
-        left1 = setup("boy_left_1");
-        left2 = setup("boy_left_2");
-        right1 = setup("boy_right_1");
-        right2 = setup("boy_right_2");
+        up1 = setup("up_1");
+        up2 = setup("up_2");
+        down1 = setup("down_1");
+        down2 = setup("down_2");
+        left1 = setup("left_1");
+        left2 = setup("left_2");
+        right1 = setup("right_1");
+        right2 = setup("right_2");
     }
 
     public BufferedImage setup(String imageName)
@@ -194,19 +195,24 @@ public class Player extends Entity
             // gamePanel.object[index] = null;
 
             String objectName = gamePanel.object[index].name;
+            Main.currentPlayer.setLocation(CityManager.cities.get(objectName));
+            gameFlow = new GameFlow();
             
             // outer:
             switch(objectName)
             {
-                case "Lavender Town":
+                case "Pewter City":
                 {
-                    
-                    gameFlow = new GameFlow();
+                    // gameFlow = new GameFlow();
                     gameFlow.intermediate(Main.currentPlayer, objectName);
                     break;
                 }
-                case "Door":
+                case "Pallet Town":
                 {
+                    // gameFlow = new GameFlow();
+                    
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
                     // if(hasKey > 0)
                     // {
                     //     gamePanel.object[index] = null;
@@ -215,9 +221,10 @@ public class Player extends Entity
                     // }
                     // break;
                 }
-                case "Grass":
+                case "Cinnabar Island":
                 {
-                    
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
                     // frame = new JFrame();
                     // panel = new JPanel();
                     // button = new JButton("Testing");
@@ -242,16 +249,51 @@ public class Player extends Entity
                     // // gamePanel.drawPanel();
                     // // System.out.println("You have encountered a wild pokemon!");
                     // // Battle implementation here
-                    outer2:
-                    while(this.condition2)
-                    {
-                        if(this.condition2)
-                        {
-                            this.condition2 = false;
-                            break outer2;
-                        }
-                        // break;
-                    }
+                    // outer2:
+                    // while(this.condition2)
+                    // {
+                    //     if(this.condition2)
+                    //     {
+                    //         this.condition2 = false;
+                    //         break outer2;
+                    //     }
+                    //     // break;
+                    // }
+                }
+                case "Lavender Town":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Fuschia City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Cerulean City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Celadon City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Vermillion City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Saffron City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
+                }
+                case "Viridian City":
+                {
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
+                    break;
                 }
             }
         }

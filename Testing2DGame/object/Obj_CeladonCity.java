@@ -6,23 +6,23 @@ import javax.imageio.ImageIO;
 
 import Testing2DGame.Main.GamePanel;
 
-public class ObjectDoor extends SuperObject
+public class Obj_CeladonCity extends SuperObject
 {
     GamePanel panel;
 
-    public ObjectDoor(GamePanel panel)
+    public Obj_CeladonCity(GamePanel panel)
     {
         this.panel = panel;
-        name = "Door";
+        name = "Celadon CIty";
         
         try
         {
-            image = ImageIO.read(getClass().getResourceAsStream("./door.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("./town.png"));
             uTool.scaleImage(image, panel.tileSize, panel.tileSize);
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
-    }
+    }    
 }

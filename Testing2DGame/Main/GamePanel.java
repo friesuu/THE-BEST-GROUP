@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable
     public final int worldHeight = tileSize * maxWorldRow;
 
     // FPS
-    int FPS = 60;
+    int FPS = 200;
 
     // System
     TileManager tileManager = new TileManager(this);
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable
     private boolean gamePaused = false;
 
     // Objects and Player
-    public SuperObject object[] = new SuperObject[10]; // Prepares 10 slots for objects, can display 10 objects at the same time
+    public SuperObject object[] = new SuperObject[11]; // Prepares 10 slots for objects, can display 10 objects at the same time
     public Player player = new Player(this, keyHandle);
 
     // Game state
