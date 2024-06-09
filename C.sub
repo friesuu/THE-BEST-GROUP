@@ -1,0 +1,12 @@
+# C.sub -- C job
+executable = C.sh
+log = C.log
+output = C.out
+error = C.err
+should_transfer_filesNo
+when_to_transfer_files = ON_EXIT
+request_cpus = 1
+request_memory = 512M
+request_disk = 1G
+estimate_runtime = 20
+queue

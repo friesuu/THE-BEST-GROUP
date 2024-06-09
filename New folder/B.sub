@@ -1,0 +1,12 @@
+# B.sub -- B job
+executable = B.sh
+log = B.log
+output = B.out
+error = B.err
+should_transfer_filesYes
+when_to_transfer_files = ON_EXIT
+request_cpus = 2
+request_memory = 1024M
+request_disk = 2G
+estimate_runtime = 15
+queue

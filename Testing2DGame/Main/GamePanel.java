@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import Testing2DGame.Entity.Player;
 import Testing2DGame.Tile.TileManager;
 import Testing2DGame.object.SuperObject;
+import javax.swing.JButton;
 
 public class GamePanel extends JPanel implements Runnable 
 {
@@ -27,15 +28,26 @@ public class GamePanel extends JPanel implements Runnable
     public final int wordWidt = tileSize * maxWorldCol;
     public final int worldHeight = tileSize * maxWorldRow;
 
+    // FPS
     int FPS = 60;
 
+    // System
     TileManager tileManager = new TileManager(this);
-    KeyHandler keyHandle = new KeyHandler();
+    KeyHandler keyHandle = new KeyHandler(this);
     Thread gameThread;
-    public Player player = new Player(this, keyHandle);
+    JButton button;
     public CollisionChecker checker = new CollisionChecker(this);
-    public SuperObject object[] = new SuperObject[10]; // Prepares 10 slots for objects, can display 10 objects at the same time
     public ObjectPlacer objectPlacer = new ObjectPlacer(this);
+    private boolean gamePaused = false;
+
+    // Objects and Player
+    public SuperObject object[] = new SuperObject[10]; // Prepares 10 slots for objects, can display 10 objects at the same time
+    public Player player = new Player(this, keyHandle);
+
+    // Game state
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
     public GamePanel() 
     {
@@ -49,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable
     public void setupGame()
     {
         objectPlacer.setObject();
+        gameState = playState;
     }
 
     public void startGameThread() 
@@ -68,11 +81,16 @@ public class GamePanel extends JPanel implements Runnable
 
         while (gameThread != null) 
         {
-            update();
+            if (!gamePaused) // Check if the game is not paused
+            { 
+                update();
+                repaint();
+            }
 
-            repaint();
+            // update();
 
-            
+            // repaint();
+
             try 
             {
                 double remaingTime = nextDrawTime - System.nanoTime();
@@ -89,25 +107,32 @@ public class GamePanel extends JPanel implements Runnable
             } 
             catch (InterruptedException e) 
             {
-                // TODO Auto-generated catch block
+                // Thread.currentThread().interrupt();
                 e.printStackTrace();
             }
         }
     }
-
+    
     public void update()
     {
-        player.update();
+        if(gameState == playState)
+        {
+            player.update();
+        }
+        if(gameState == pauseState)
+        {
+            // Nothing
+        }
     }
-
+        
     public void paintComponent(Graphics g) 
     {
         super.paintComponent(g);
-
+        
         Graphics2D g2 = (Graphics2D) g;
         
         tileManager.draw(g2); // TILES
-
+        
         // OBJECT
         for(int i = 0; i < object.length; i++)
         {
@@ -116,8 +141,10 @@ public class GamePanel extends JPanel implements Runnable
                 object[i].draw(g2, this);
             }
         }
-
+                
         player.draw(g2); // PLAYER
         g.dispose();
     }
+
 }
+                

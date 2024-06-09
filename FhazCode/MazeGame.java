@@ -1,10 +1,9 @@
 package FhazCode;
 
-import java.util.Scanner;
 import java.util.Stack;
 
-public class MazeGame 
-{   
+public class MazeGame
+{
     private static final char WALL = '#';
     private static final char PATH = '.';
     private static final char START = 'S';
@@ -28,17 +27,17 @@ public class MazeGame
     }
 
 
-    public void displayMaze() 
+    public void displayMaze()
     {
-        for (int i = 0; i < maze.length; i++) 
+        for (int i = 0; i < maze.length; i++)
         {
-            for (int j = 0; j < maze[i].length; j++) 
+            for (int j = 0; j < maze[i].length; j++)
             {
-                if (i == currentPosition[0] && j == currentPosition[1]) 
+                if (i == currentPosition[0] && j == currentPosition[1])
                 {
                     System.out.print(PLAYER + " ");
-                } 
-                else 
+                }
+                else
                 {
                     System.out.print(maze[i][j] + " ");
                 }
@@ -47,11 +46,11 @@ public class MazeGame
         }
     }
 
-    public boolean move(String direction) 
+    public boolean move(String direction)
     {
         int[] newPosition = currentPosition.clone();
         System.out.println(direction);
-        switch (direction.toLowerCase()) 
+        switch (direction.toLowerCase())
         {
             case "up":
                 newPosition[0]--;
@@ -72,25 +71,25 @@ public class MazeGame
                 return false;
         }
 
-        if (isValidMove(newPosition)) 
+        if (isValidMove(newPosition))
         {
             currentPosition = newPosition;
             pathStack.push(newPosition.clone());
             return true;
-        } 
-        else 
+        }
+        else
         {
             System.out.println("Invalid move. Try again.");
             return false;
         }
     }
 
-    public boolean isValidMove(int[] position) 
+    public boolean isValidMove(int[] position)
     {
         int row = position[0];
         int col = position[1];
-        
-        if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length) 
+
+        if (row < 0 || row >= maze.length || col < 0 || col >= maze[0].length)
         {
             return false;
         }
@@ -98,7 +97,7 @@ public class MazeGame
         {
             System.out.println("GAME END");
         } */
-        
+
         char cell = maze[row][col];
         return cell == PATH || cell == START || cell == END || cell == GHOST;
     }
@@ -111,9 +110,9 @@ public class MazeGame
         return currentPosition[0] == end[0] && currentPosition[1] == end[1];
     }
 
-    /* public static void main(String[] args) 
+    /* public static void main(String[] args)
     {
-        char[][] maze = 
+        char[][] maze =
         {
             {'#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#'},
             {'#', 'S', '.', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '.', '.', '.', '#'},
@@ -129,26 +128,26 @@ public class MazeGame
         int[] start = {1, 1};
         int[] end = {8, 15};
 
-        MazeGame game = new MazeGame(maze, start, end);
+        PokemonKantoAdventure.MazeGame game = new PokemonKantoAdventure.MazeGame(maze, start, end);
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to the PokeMaze Challenge!");
-        while (true) 
+        while (true)
         {
             game.displayMaze();
             System.out.print("Enter direction (up, down, left, right): ");
             String direction = scanner.nextLine();
 
-            if (game.move(direction)) 
+            if (game.move(direction))
             {
-                if (game.isCaughtByGhost(game.currentPosition)) 
+                if (game.isCaughtByGhost(game.currentPosition))
                 {
                     game.displayMaze();
                     System.out.println("Oh no! You encountered a Ghastly and got caught.");
-                    System.out.println("Game Over.");
+                    System.out.println("PokemonKantoAdventure.Game Over.");
                     break;
                 }
-                if (game.hasReachedEnd()) 
+                if (game.hasReachedEnd())
                 {
                     game.displayMaze();
                     System.out.println("Congratulations! You've reached the end of the maze.");

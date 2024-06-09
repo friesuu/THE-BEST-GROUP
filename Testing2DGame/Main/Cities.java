@@ -1,8 +1,8 @@
-package PokemonKantoRegion;
+package Testing2DGame.Main;
 
 import java.util.List;
 
-public class City 
+public class Cities 
 {
     private String name;
     private List<String> adjacentCities;
@@ -10,7 +10,7 @@ public class City
     private String gymType;
     private List<String> wildPokemon;
 
-    public City(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> wildPokemon) 
+    public Cities(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> wildPokemon) 
     {
         this.name = name;
         this.adjacentCities = adjacentCities;

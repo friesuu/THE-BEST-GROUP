@@ -9,20 +9,31 @@ import java.util.List;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import Testing2DGame.Main.CityManager;
+import Testing2DGame.Main.GameFlow;
 import Testing2DGame.Main.GamePanel;
 import Testing2DGame.Main.KeyHandler;
+import Testing2DGame.Main.Main;
 import Testing2DGame.Main.MazeGame;
+import Testing2DGame.Main.UtilityTool;
 
 public class Player extends Entity
 {
     GamePanel gamePanel;
     KeyHandler keyHandler;
+    JButton button;
+    JPanel panel;
+    JFrame frame;
+    GameFlow gameFlow;
 
     public final int screenX;
     public final int screenY;
-    int hasKey = 0; // How many keys the player currently has
+    // int hasKey = 0; // How many keys the player currently has
+    boolean condition2 = true;
 
     private static CityManager cityManager;// = new CityManager();
     private static String currentCity = "Pallet Town"; // Start at Pallet Town
@@ -70,21 +81,31 @@ public class Player extends Entity
 
     public void getPlayerImage()
     {
+        up1 = setup("boy_up_1");
+        up2 = setup("boy_up_2");
+        down1 = setup("boy_down_1");
+        down2 = setup("boy_down_2");
+        left1 = setup("boy_left_1");
+        left2 = setup("boy_left_2");
+        right1 = setup("boy_right_1");
+        right2 = setup("boy_right_2");
+    }
+
+    public BufferedImage setup(String imageName)
+    {
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
         try
         {
-            up1 = ImageIO.read(getClass().getResourceAsStream(".\\boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream(".\\boy_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream(".\\boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream(".\\boy_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream(".\\boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream(".\\boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream(".\\boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream(".\\boy_right_2.png"));
+            image = ImageIO.read(getClass().getResourceAsStream(".\\" + imageName + ".png"));
+            image = uTool.scaleImage(image, gamePanel.tileSize, gamePanel.tileSize);
         }
         catch(IOException e)
         {
             e.printStackTrace();
         }
+        return image;
     }
 
     public void update() 
@@ -167,158 +188,70 @@ public class Player extends Entity
 
     public void pickUpObject(int index)
     {
+        // boolean condition2 = true;
         if(index != 999)
         {
             // gamePanel.object[index] = null;
 
             String objectName = gamePanel.object[index].name;
             
+            // outer:
             switch(objectName)
             {
-                case "Key":
+                case "Lavender Town":
                 {
-                    CityManager cityManager = new CityManager();
-
-                    Scanner scanner = new Scanner(System.in);
-
-                    boolean condition = true;
-
-                    outer:
-                    while (true) 
-                    {
-                        System.out.println("+----------------------------------------------------------------------+");
-                        System.out.println("You are currently in " + objectName + ":");
-                        System.out.println("+----------------------------------------------------------------------+");
-
-                        // List<String> adjacentCities = (cityManager.cities).get(currentCity).getAdjacentCities();
-
-                        // for (int i = 0; i < adjacentCities.size(); i++) 
-                        // {
-                        //     System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
-                        // }
-
-                        System.out.println("[1] Challenge Gym Leader [" + (cityManager.cities).get(currentCity).getGymLeader() + " - " + (cityManager.cities).get(currentCity).getGymType() + " type]");
-                        System.out.println("[2] Fight Wild Pokémon [" + String.join(", ", (cityManager.cities).get(currentCity).getWildPokemon()) + " are common]");
-                        System.out.println("[3] Player Options");
-                        System.out.println("[4] PokeMaze");
-                        System.out.println("[5] Exit (Go back to GUI)");
-                        System.out.print("+----------------------------------------------------------------------+\nYour choice: ");
-                        
-                        int choice = scanner.nextInt();
-                        
-                        switch (choice) 
-                        {
-                            case 1:
-                            {
-                                System.out.println("Challenging Gym Leader " + (cityManager.cities).get(currentCity).getGymLeader() + "...");
-                                // Implement Gym Leader battle logic here
-                                break;
-                            }
-                            case 2:
-                            {
-                                System.out.println("Encountering wild Pokémon...");
-                                // Implement wild Pokémon encounter logic here
-                                break;
-                            }
-                            case 3:
-                            {
-                                System.out.println("Player Options:");
-                                System.out.println("a. Show map");
-                                System.out.println("b. Show My Pokémon");
-                                System.out.println("c. Show My badges");
-                                System.out.println("d. Save and Exit");
-                                System.out.println("e. Exit");
-                                System.out.print("Your choice: ");
-                                String playerOption = scanner.next();
-                                switch (playerOption) 
-                                {
-                                    case "a":
-                                    {
-                                        //displayMap();
-                                        break;
-                                    }
-                                    case "b":
-                                    {
-                                        // Implement showing player's Pokémon
-                                        break;
-                                    }
-                                    case "c":
-                                    {
-                                        // Implement showing player's badges
-                                        break;
-                                    }
-                                    case "d":
-                                    {
-                                        System.out.println("Saving game and exiting..."); // Implement game saving code
-                                        System.exit(0);
-                                    }
-                                    case "e":
-                                    {
-                                        break;
-                                    }
-                                    default:
-                                    System.out.println("Invalid option.");
-                                }
-                                break;
-                            }
-                            case 4:
-                            {
-                                int[] start = {1, 1};
-                                int[] end = {8, 15};
-
-                                MazeGame game = new MazeGame(maze, start, end);
-                                Scanner keyboard = new Scanner(System.in);
-
-                                System.out.println("Welcome to the PokeMaze Challenge!");
-                                while (true) 
-                                {
-                                    game.displayMaze();
-                                    System.out.print("Enter direction (up, down, left, right): ");
-                                    String direction = keyboard.nextLine();
-
-                                    if (game.move(direction)) 
-                                    {
-                                        if (game.isCaughtByGhost(game.currentPosition)) 
-                                        {
-                                            game.displayMaze();
-                                            System.out.println("Oh no! You encountered a Ghastly and got caught.");
-                                            System.out.println("Game Over.");
-                                            break;
-                                        }
-                                        if (game.hasReachedEnd()) 
-                                        {
-                                            game.displayMaze();
-                                            System.out.println("Congratulations! You've reached the end of the maze.");
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                break;
-                            }
-                            case 5:
-                            {
-                                System.out.println("Exited the town. Go back to GUI to go to another town");
-                                condition = false;
-                                break outer;
-                            }
-                            default:
-                            {
-                                System.out.println("Invalid choice. Please try again.");
-                            }
-                        }
-                    }
+                    
+                    gameFlow = new GameFlow();
+                    gameFlow.intermediate(Main.currentPlayer, objectName);
                     break;
                 }
                 case "Door":
                 {
-                    if(hasKey > 0)
+                    // if(hasKey > 0)
+                    // {
+                    //     gamePanel.object[index] = null;
+                    //     hasKey--;
+                    //     System.out.println("Key:" + hasKey);
+                    // }
+                    // break;
+                }
+                case "Grass":
+                {
+                    
+                    // frame = new JFrame();
+                    // panel = new JPanel();
+                    // button = new JButton("Testing");
+                    // int condition = 1;
+                    // frame.setTitle("My GUI");
+                    // frame.setSize(400, 300);
+                    // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    // Scanner scanner = new Scanner(System.in);
+
+                    // //button.add("TESTING");
+
+                    // panel.add(button);
+                    // frame.add(panel);
+
+                    // // Add components, set layout, etc.
+                    // frame.setVisible(true);
+                    // while(condition == 1)
+                    // {
+                    //     condition = scanner.nextInt();
+
+                    // }
+                    // // gamePanel.drawPanel();
+                    // // System.out.println("You have encountered a wild pokemon!");
+                    // // Battle implementation here
+                    outer2:
+                    while(this.condition2)
                     {
-                        gamePanel.object[index] = null;
-                        hasKey--;
-                        System.out.println("Key:" + hasKey);
+                        if(this.condition2)
+                        {
+                            this.condition2 = false;
+                            break outer2;
+                        }
+                        // break;
                     }
-                    break;
                 }
             }
         }
@@ -382,7 +315,7 @@ public class Player extends Entity
                 break;
             }
         }
-        g2.drawImage(image, screenX, screenY, gamePanel.tileSize, gamePanel.tileSize, null);
+        g2.drawImage(image, screenX, screenY, null);
         
     }
 }

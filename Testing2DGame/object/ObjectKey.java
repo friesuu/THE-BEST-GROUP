@@ -4,15 +4,21 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import Testing2DGame.Main.GamePanel;
+
 public class ObjectKey extends SuperObject
 {
-    public ObjectKey()
+    GamePanel panel;
+
+    public ObjectKey(GamePanel panel)
     {
-        name = "Key";
+        this.panel = panel;
+        name = "Lavender Town";
         
         try
         {
             image = ImageIO.read(getClass().getResourceAsStream("./key.png"));
+            uTool.scaleImage(image, panel.tileSize, panel.tileSize);
         }
         catch(IOException e)
         {
