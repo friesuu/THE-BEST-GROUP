@@ -60,13 +60,8 @@ public class Player {
     public void showPokemon() { // method to show all pokemon yang wujud
         System.out.println("Your Pokémon:");
         for (int i=0; i<getPokemon().size(); i++){
-            if (getPokemon().get(i).getLevel()>=1 && getPokemon().get(i).getLevel()<=10){
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/100 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }else if (getPokemon().get(i).getLevel()>=10 && getPokemon().get(i).getLevel()<=30){
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/200 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }else{
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/300 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }
+            System.out.println(pokemon.get(i));
+            System.out.println();
         }
         System.out.println("+--------------------------------------------------------------------------------------------+");
 
@@ -129,6 +124,9 @@ public class Player {
     }
 
 
+    public void setBadges(List<String> badges) {
+        this.badges = badges;
+    }
 
     public void setLocation(City location) {
         this.location = location;

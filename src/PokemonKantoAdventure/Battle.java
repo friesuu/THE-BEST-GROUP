@@ -122,6 +122,20 @@ public class Battle {
 
             }
 
+
+
+        }
+
+        if (k <playersPokemon.size()){
+            player.addBadge(opponent.getBadge());
+        }
+
+        for(int a=0 ; a<oppsPokemon.size() ; a++){
+            oppsPokemon.get(a).resetHp();
+        }
+
+        for(int b=0 ; b<playersPokemon.size() ; b++){
+            playersPokemon.get(b).resetHp();
         }
 
         System.out.println("\nThe battle ended.");

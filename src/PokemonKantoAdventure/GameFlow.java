@@ -150,7 +150,7 @@ public class GameFlow {
         System.out.printf("OAK: Right! So your name is %s! Welcome to the world of Pokemon. It's time to choose your starting pokemon.\n", namePlayer);
         System.out.println("+--------------------------------------------------------------------------------------------+");
         for (int i=0; i<3; i++){
-            System.out.printf("[%d] %s [%s - Level %d]\n", i+1, pokemons[i].getName(), pokemons[i].getType(), pokemons[i].getLevel());
+            System.out.printf("[%d] %s [%s - Level 5]\n", i+1, pokemons[i].getName(), pokemons[i].getType());
         }
         System.out.println("+--------------------------------------------------------------------------------------------+");
 

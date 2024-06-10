@@ -29,7 +29,7 @@ public class Pokemon {
         this.strength[1] = strength2;
         this.strength[2] = strength3;
         this.weakness[0] = weakness1;
-        this.weakness[1] = weakness1;
+        this.weakness[1] = weakness2;
         this.weakness[2] = weakness3;
         this.speed = speed;
     }
@@ -75,7 +75,7 @@ public class Pokemon {
         level++;
         hp += 10;
         System.out.println(name + " leveled up!");
-        System.out.printf("%s [Level %d ---> Level %d]", name, level-1, level);
+        System.out.printf("%s [Level %d ---> Level %d]\n", name, level-1, level);
         updateDamage();
 
     }
@@ -137,6 +137,7 @@ public class Pokemon {
 
     @Override
     public String toString() {
+
         return String.format("Name: %s\nLevel: %d\nType: %s\nHP: %d\nXP: %d/100\nMoves: %s, %s\nStrong Against: %s, %s, %s\nWeak Against: %s, %s, %s",
                 name, level, type, hp, xp, move[0], move[1], strength[0], strength[1], strength[2], weakness[0], weakness[1], weakness[2]);
     }
@@ -232,5 +233,9 @@ public class Pokemon {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public void resetHp(){
+       hp=100;
     }
 }

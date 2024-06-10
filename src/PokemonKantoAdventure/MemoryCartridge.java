@@ -89,12 +89,16 @@ public class MemoryCartridge {
                 System.out.print("Enter the number of the saved game you want to override : ");
                 int input = sc.nextInt();
                 System.out.println("+--------------------------------------------------------------------------------------------+");
+                int[] tempDamage = new int[2];
 
                 switch (input){
                     case 1:
                         Main.player1 = new Player(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player1;
-                        //while (true) {
+                        Main.currentPlayer.getPokemon().getFirst().setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
+                        Main.currentPlayer.getPokemon().getFirst().setDamage(tempDamage);
                         gameFlow.intermediate(Main.player1);
                         break;
 
@@ -102,7 +106,9 @@ public class MemoryCartridge {
 
                         Main.player2 = new Player(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player2;
-                        //while (true) {
+                        Main.currentPlayer.getPokemon().getFirst().setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
                         gameFlow.intermediate(Main.player2);
 
                         break;
@@ -111,7 +117,9 @@ public class MemoryCartridge {
 
                         Main.player3 = new Player(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player3;
-                        //while (true) {
+                        Main.currentPlayer.getPokemon().getFirst().setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
                         gameFlow.intermediate(Main.player3);
 
                         break;

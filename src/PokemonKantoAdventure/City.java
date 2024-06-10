@@ -12,10 +12,12 @@ public class City
     private String gymType;
     private List<Pokemon> wildPokemon = new ArrayList<>();
     private List<Pokemon> gymLeaderPokemon = new ArrayList<>();
+    private String badge;
 
-    public City(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> gymLeaderPokemon, List<String> wildPokemons)
+    public City(String name,String badge, List<String> adjacentCities, String gymLeader, String gymType, List<String> gymLeaderPokemon, List<String> wildPokemons)
     {
         this.name = name;
+        this.badge = badge;
         this.adjacentCities = adjacentCities;
         this.gymLeader = gymLeader;
         this.gymType = gymType;
@@ -86,6 +88,14 @@ public class City
                 }
             }
         }
+    }
+
+    public String getBadge() {
+        return badge;
+    }
+
+    public void setBadge(String badge) {
+        this.badge = badge;
     }
 
     public String printWildPokemon() {

@@ -27,29 +27,28 @@ public class SaveGameManager {
         JSONObject saveData = new JSONObject();
         JSONArray savePokemon = new JSONArray();
         JSONArray savePokemonLevel = new JSONArray();
-        JSONArray savePokemonHP = new JSONArray();
-        JSONArray savePokemonXP = new JSONArray();
         JSONObject pokemon = new JSONObject();
         JSONArray saveDefeated = new JSONArray();
         JSONObject defeated = new JSONObject();
         JSONArray saveBadges = new JSONArray();
         JSONObject badges = new JSONObject();
         saveData.put("trainerName", player.getPlayerName());
-        saveBadges.add("to be added in the class");
-        saveData.put("earnedBadges",saveBadges);
         saveDefeated.add("to be added in the class");
         saveData.put("defeatedGymLeaders", saveDefeated);
         saveData.put("currentLocation", player.getLocation().getName());
         for (int i=0; i<player.getPokemon().size(); i++){
             savePokemon.add(player.getPokemon().get(i).getName());
             savePokemonLevel.add(player.getPokemon().get(i).getLevel());
-            savePokemonHP.add(player.getPokemon().get(i).getHp());
-            savePokemonXP.add(player.getPokemon().get(i).getXp());
+            // FOR NOW JUST NAME, LATER ADD LEVELS TOO
         }
+
+        for(int j = 0; j < player.getBadges().size(); j++){
+            saveBadges.add(player.getBadges().get(j));
+        }
+
+        saveData.put("earnedBadges",saveBadges);
         saveData.put("pokemonTeam", savePokemon);
         saveData.put("pokemonLevel", savePokemonLevel);
-        saveData.put("pokemonHP",savePokemonHP);
-        saveData.put("pokemonXP", savePokemonXP);
 
 
 
@@ -107,11 +106,8 @@ public class SaveGameManager {
             JSONArray earnedBadges = (JSONArray) saveData.get("earnedBadges");
             JSONArray pokemonTeam = (JSONArray) saveData.get("pokemonTeam");
             JSONArray pokemonLevel = (JSONArray) saveData.get("pokemonLevel");
-            JSONArray pokemonHP = (JSONArray) saveData.get("pokemonHP");
-            JSONArray pokemonXP = (JSONArray) saveData.get("pokemonXP");
             JSONArray defeatedGymLeaders = (JSONArray) saveData.get("defeatedGymLeaders");
             String currentLocation = (String) saveData.get("currentLocation");
-
 
             // Create Player object from loaded data
 
@@ -127,12 +123,11 @@ public class SaveGameManager {
 
             for (int j=0; j<tempPokemonList.size(); j++){
                 tempPokemonList.get(j).setLevel(Integer.parseInt(pokemonLevel.get(j).toString()));
-                tempPokemonList.get(j).setHp(Integer.parseInt(pokemonHP.get(j).toString()));
-                tempPokemonList.get(j).setXp(Integer.parseInt(pokemonXP.get(j).toString()));
+
             }
 
             player = new Player(trainerName, tempPokemonList);
-            
+
             City tempLoc = null;
 
             for (Map.Entry<String, City> entry : CityManager.cities.entrySet()) {
@@ -143,6 +138,12 @@ public class SaveGameManager {
                 }
             }
             player.setLocation(tempLoc);
+
+            List<String> tempBadges = new ArrayList<>();
+            for (int i=0; i<earnedBadges.size(); i++){
+                tempBadges.add(earnedBadges.get(i).toString());
+            }
+            player.setBadges(tempBadges);
 
 //            player.setPokemonTeam((ArrayList<Pokemon>) pokemonTeam);
 //            player.setDefeatedGymLeaders((ArrayList<String>) defeatedGymLeaders);
