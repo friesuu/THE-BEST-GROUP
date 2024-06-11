@@ -91,6 +91,7 @@ public class Battle {
                         System.out.println("+--------------------------------------------------------------------------------------------+");
 
                     }
+
                     continue;
                 }
 
@@ -119,15 +120,27 @@ public class Battle {
                         i %= 2;
                     }
                 }
+            }
+        }
 
+        if (l >= oppsPokemon.size()){
+
+            for (int p=0; p<player.getBadges().size(); p++){
+                if (player.getBadges().get(p).equalsIgnoreCase(opponent.getBadge())){
+                    break;
+                }
+                player.addBadge(opponent.getBadge());
             }
 
 
+            System.out.println( "You have obtained " + opponent.getBadge()+ "!\n");
+            System.out.println("+--------------------------------------------------------------------------------------------+");
 
-        }
-
-        if (k <playersPokemon.size()){
-            player.addBadge(opponent.getBadge());
+            if (player.getBadges().size()>= 8){
+                System.out.println("\n");
+                System.out.println("CONGRATULATION YOU HAVE FINISHED THE GAME!\n\n\n");
+                System.exit(0);
+            }
         }
 
         for(int a=0 ; a<oppsPokemon.size() ; a++){
@@ -141,7 +154,11 @@ public class Battle {
         System.out.println("\nThe battle ended.");
         System.out.println("+--------------------------------------------------------------------------------------------+");
 
-
+        if (player.getBadges().size()>= 8){
+            System.out.println("\n");
+            System.out.println("CONGRATULATION "+player.getPlayerName() + " YOU HAVE FINISHED THE GAME!\n\n\n");
+            System.exit(0);
+        }
     }
 
 

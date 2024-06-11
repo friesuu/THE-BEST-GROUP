@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class GameFlow {
 
-    static Pokemon[] pokemons = new Pokemon[58];
+    static Pokemon[] pokemons = new Pokemon[80];
 
     public static char[][] maze =
             {
@@ -108,9 +108,19 @@ public class GameFlow {
         for (int i = 0; i < adjacentCities.size(); i++) {
             System.out.println("    " + (i + 1) + ". " + adjacentCities.get(i));
         }
-        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town") ) {
+        boolean defeated = false;
+        for (int i=0 ; i<player.getBadges().size(); i++){
+            if (player.getBadges().get(i).equalsIgnoreCase(currentCity.getBadge())){
+                defeated = true;
+            }
+        }
+        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town") && defeated==false ) {
             System.out.println("[" + counter++ + "] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type]");
         }
+        else if (defeated==true){
+            System.out.println("[" + counter++ + "] Challenge Gym leader [" + currentCity.getGymLeader() + " - " + currentCity.getGymType() + " type] [Gym Leader "+ currentCity.getGymLeader()+" has been defeated before]" );
+        }
+
         else if (currentCity.getName().equalsIgnoreCase("Pallet Town")){
             System.out.println("[" + counter++ + "] Talk to Mom [Your hometown has no gym]");
         }
@@ -182,12 +192,12 @@ public class GameFlow {
 
         int i = 0;
         try {
-            Scanner pokemonlist = new Scanner(new FileInputStream("D:\\DEGREE\\1ST YEAR\\intellij\\POKEMONDRAFT\\src\\POKEMONLIST"));
+            Scanner pokemonlist = new Scanner(new FileInputStream("D:\\DEGREE\\1ST YEAR\\SEM 2\\draft+xayne\\src\\POKEMONLIST"));
             //FileReader pokemonlist = new FileReader ("D:\\DEGREE\\1ST YEAR\\net code\\DUITRIA\\LOCATIONS.txt");
 
             while (pokemonlist.hasNextLine()) {
                 String[] pokemonRead = pokemonlist.nextLine().split(",");
-                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13], Integer.parseInt(pokemonRead[14]));
+                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13], Integer.parseInt(pokemonRead[14]), Integer.parseInt(pokemonRead[15]), pokemonRead[16]);
                 i++;
             }
 
@@ -227,6 +237,7 @@ public class GameFlow {
                         System.out.println("+--------------------------------------------------------------------------------------------+");
 
                         Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
+
                     }
                     else{
                         System.out.printf("MOM: \"Oh, %s! You're leaving on your adventure with Pokémon? How\n" +

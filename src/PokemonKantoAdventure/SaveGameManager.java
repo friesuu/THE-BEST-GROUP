@@ -116,15 +116,12 @@ public class SaveGameManager {
                 for (int i = 0; i < GameFlow.pokemons.length; i++) {
                     if (pokemonTeam.get(j).equals(GameFlow.pokemons[i].getName())){
                         tempPokemonList.add(GameFlow.pokemons[i]);
-                        //ADD ON LEVEL BERAPA HERE USING SETLEVEL METHOD
+                        tempPokemonList.get(j).setLevel(Integer.parseInt( pokemonLevel.get(j).toString()));
                     }
                 }
             }
 
-            for (int j=0; j<tempPokemonList.size(); j++){
-                tempPokemonList.get(j).setLevel(Integer.parseInt(pokemonLevel.get(j).toString()));
 
-            }
 
             player = new Player(trainerName, tempPokemonList);
 
