@@ -15,6 +15,7 @@ public class Player {
     private int HP;
     private int XP;
     private List<String> badges;
+    private List<String> defeatedGym;
 
     //private String location;  //should we make another class for location?
 
@@ -41,6 +42,11 @@ public class Player {
     public void addBadge(String badge) {
         badges.add(badge);
     }
+
+    public void addDefeatedGym(String gym) {
+        defeatedGym.add(gym);
+    }
+
 
     public void showBadges() {
         System.out.println("Your Badges:");
@@ -132,5 +138,11 @@ public class Player {
         this.location = location;
     }
 
+    public List<String> getDefeatedGym() {
+        return defeatedGym;
+    }
 
+    public void setDefeatedGym(List<String> defeatedGym) {
+        this.defeatedGym = defeatedGym;
+    }
 }

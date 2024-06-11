@@ -1,10 +1,7 @@
 package PokemonKantoAdventure;
 
 import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Battle {
     private List<Pokemon> oppsPokemon; //could change to class of characters
@@ -97,7 +94,7 @@ public class Battle {
 
                 if (turnChecker(playersPokemon.get(k),oppsPokemon.get(l)) == playersPokemon.get(k)) {
                     if (i % 2 == 1) {
-                        battleRounds(j, playersPokemon.get(k));
+                        battleRounds(j, player, k);
                         action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
                         i++;
                         i %= 2;
@@ -109,7 +106,7 @@ public class Battle {
                     }
                 }else{
                     if (i % 2 == 0) {
-                        battleRounds(j, playersPokemon.get(k));
+                        battleRounds(j, player, k);
                         action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
                         i++;
                         i %= 2;
@@ -134,6 +131,7 @@ public class Battle {
             }
             if (defeatedBefore ==  false){
                 player.addBadge(opponent.getBadge());
+                player.addDefeatedGym(opponent.getGymLeader());
             }
 
             System.out.println( "You have obtained " + opponent.getBadge()+ "!\n");
@@ -177,9 +175,7 @@ public class Battle {
     public void action (int decision, Pokemon pokemon, Pokemon opponent){
         System.out.println(pokemon.getName()+ " uses " + pokemon.getMove()[decision]);
 
-        // I THINK THERE SHOULD BE CONDITION CHECKING HOW MUCH OPP'S XPHP DECREASES TO KNOW EFFECTIVE OR NOT
-        //UPDATE : ITS DONE ALREADY IN POKEMON CLASS
-        //UPDATE: I AM NOT SURE IF IT CHECKS EFFECTIVE DAMAGE FOR OPPONENT
+
         int damage = pokemon.calculateDamage(decision,opponent);
         opponent.setHp(opponent.getHp()-damage);
     }
@@ -187,11 +183,11 @@ public class Battle {
 
 
 
-    public void battleRounds (int count, Pokemon pokemons){
+    public void battleRounds (int count, Player player, int index){
         System.out.printf("\nRound %d: \n", count);
-        System.out.printf("%s's Moves:\n", pokemons.getName());
-        pokemons.printMove();
-        System.out.println("\nWhich move will " + pokemons.getName() + " use?");
+        System.out.printf("%s's Moves:\n", player.getPokemon().get(index).getName());
+        player.getPokemon().get(index).printMove();
+        System.out.println("\nWhich move will " + player.getPokemon().get(index).getName() + " use?");
     }
 
     public int opponentRound (Pokemon opponent){
