@@ -79,7 +79,7 @@ public class Pokemon {
         level++;
         hp += 10;
         System.out.println(name + " leveled up!");
-        System.out.printf("%s [Level %d ---> Level %d]\n", name, level-1, level);
+        System.out.printf("%s [Level %d ---> Level %d]\n\n", name, level-1, level);
         updateDamage();
         evolve();
 
@@ -89,22 +89,39 @@ public class Pokemon {
         if (level == levelEvolve){
             for (int i=0; i<GameFlow.pokemons.length; i++){
                 if (GameFlow.pokemons[i].getName().equalsIgnoreCase(nextForm)){
-                    name = GameFlow.pokemons[i].getName();
-                    this.ID = GameFlow.pokemons[i].getID();
-                    this.type = GameFlow.pokemons[i].getType();
-                    this.levelEvolve = GameFlow.pokemons[i].getLevelEvolve();
-                    this.move[0] = GameFlow.pokemons[i].getMove()[0];
-                    this.damage[0] = GameFlow.pokemons[i].getDamage()[0];
-                    this.move[1] = GameFlow.pokemons[i].getMove()[1];
-                    this.damage[1] = GameFlow.pokemons[i].getDamage()[1];
-                    this.strength[0] = GameFlow.pokemons[i].getStrength()[0];
-                    this.strength[1] = GameFlow.pokemons[i].getStrength()[1];
-                    this.strength[2] = GameFlow.pokemons[i].getStrength()[2];
-                    this.weakness[0] = GameFlow.pokemons[i].getWeakness()[0];
-                    this.weakness[1] = GameFlow.pokemons[i].getWeakness()[1];
-                    this.weakness[2] = GameFlow.pokemons[i].getWeakness()[2];
-                    this.speed = GameFlow.pokemons[i].getSpeed();
-                    this.nextForm = GameFlow.pokemons[i].getNextForm();
+
+                    System.out.println("\nYour "+ name + " has evolved into "+ GameFlow.pokemons[i].getName()+ "\n");
+                    setName(GameFlow.pokemons[i].getName());
+                    setType(GameFlow.pokemons[i].getType());
+                    setLevelEvolve(GameFlow.pokemons[i].getLevelEvolve());
+                    String[] tempMove = {GameFlow.pokemons[i].getMove()[0], GameFlow.pokemons[i].getMove()[1]};
+                    setMove(tempMove);
+                    int[] tempDamage = {GameFlow.pokemons[i].getDamage()[0], GameFlow.pokemons[i].getDamage()[1]};
+                    setDamage(tempDamage);
+                    String[] tempStrength ={GameFlow.pokemons[i].getStrength()[0], GameFlow.pokemons[i].getStrength()[1], GameFlow.pokemons[i].getStrength()[2]};
+                    setStrength(tempStrength);
+                    String[] tempWeakness = {GameFlow.pokemons[i].getWeakness()[0], GameFlow.pokemons[i].getWeakness()[1], GameFlow.pokemons[i].getWeakness()[2]};
+                    setWeakness(tempWeakness);
+                    setSpeed(GameFlow.pokemons[i].getSpeed());
+                    setNextForm(GameFlow.pokemons[i].getNextForm());
+//                    name = GameFlow.pokemons[i].getName();
+//                    ID = GameFlow.pokemons[i].getID();
+//                    type = GameFlow.pokemons[i].getType();
+//                    levelEvolve = GameFlow.pokemons[i].getLevelEvolve();
+//                    move[0] = GameFlow.pokemons[i].getMove()[0];
+//                    damage[0] = GameFlow.pokemons[i].getDamage()[0];
+//                    move[1] = GameFlow.pokemons[i].getMove()[1];
+//                    damage[1] = GameFlow.pokemons[i].getDamage()[1];
+//                    strength[0] = GameFlow.pokemons[i].getStrength()[0];
+//                    strength[1] = GameFlow.pokemons[i].getStrength()[1];
+//                    strength[2] = GameFlow.pokemons[i].getStrength()[2];
+//                    weakness[0] = GameFlow.pokemons[i].getWeakness()[0];
+//                    weakness[1] = GameFlow.pokemons[i].getWeakness()[1];
+//                    weakness[2] = GameFlow.pokemons[i].getWeakness()[2];
+//                    speed = GameFlow.pokemons[i].getSpeed();
+//                    nextForm = GameFlow.pokemons[i].getNextForm();
+
+
                 }
             }
         }
