@@ -13,7 +13,7 @@ import Testing2DGame.Entity.Player;
 public class GameFlow 
 {
     Player player;
-    static Pokemon[] pokemons = new Pokemon[58];
+    static Pokemon[] pokemons = new Pokemon[80];
 
     public static char[][] maze =
             {
@@ -31,7 +31,7 @@ public class GameFlow
 
     // 1. STARTING METHOD
     // player choose either to load saved games, start new game or exit
-    public static void start() {
+    public void start() {
 
         System.out.println("                                  ,'\\\n" +
                 "    _.----.        ____         ,'  _\\   ___    ___     ____\n" +
@@ -101,7 +101,8 @@ public class GameFlow
     // }
     // 2. CHOICE INPUT AND RETURN METHOD
     //  method to get input for player's next move
-    public String choice () { //make function return which class to call to ?? [change void -> class name (??)]
+    public String choice () 
+    { //make function return which class to call to ?? [change void -> class name (??)]
         Scanner scanner =  new Scanner(System.in);
 
         String decision;
@@ -110,7 +111,18 @@ public class GameFlow
         System.out.println("+--------------------------------------------------------------------------------------------+");
         return decision;
         //do conditional checking which class should be called based on decision
+    }
 
+    public int choiceInt () 
+    { //make function return which class to call to ?? [change void -> class name (??)]
+        Scanner scanner =  new Scanner(System.in);
+
+        int decision;
+        System.out.print("Your choice: ");
+        decision = scanner.nextInt();
+        System.out.println("+--------------------------------------------------------------------------------------------+");
+        return decision;
+        //do conditional checking which class should be called based on decision
     }
 
     // 3. INTERMEDIATE METHOD
@@ -182,7 +194,7 @@ public class GameFlow
             System.out.println("[" + counter++ + "] Player Options");
             System.out.printf("    %-20s %-20s %-20s %-20s%n", "a. Show map", "b. Show My Pokemon", "c.Show My Badges", "d.Save and Exit");
         
-            if (objectName == "Lavender Town") 
+            if (currentCity.getName().equalsIgnoreCase("Lavender Town")) 
             {
                 System.out.println("[" + counter++ + "] PokeMaze");
             }
@@ -194,7 +206,7 @@ public class GameFlow
             {
                 System.out.println("[" + counter++ + "] Safari Zone");
             }
-            if(!(objectName == "Lavender Town") && !player.getLocation().getName().equalsIgnoreCase("Fuschia City") && !player.getLocation().getName().equalsIgnoreCase("Saffron City"))
+            if(!currentCity.getName().equalsIgnoreCase("Lavender Town") && !player.getLocation().getName().equalsIgnoreCase("Fuschia City") && !player.getLocation().getName().equalsIgnoreCase("Saffron City"))
             {
                 System.out.println("[" + counter++ + "] No option");
             }
@@ -210,7 +222,8 @@ public class GameFlow
 
     // 4. ENTERNAME METHOD
     // method to enter player's name and also set it in [PokemonKantoAdventure.Player] CLASS
-    public String enterName(){
+    public String enterName()
+    {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("OAK:    Hello there! Welcome to the world of Pokémon! My name is Oak! " +
@@ -239,15 +252,30 @@ public class GameFlow
     /// UPDATE: i changed return type String-> class Pokemons
     public Pokemon choosePokemon ()
     {
-        String decision = choice();
         int chosenID=0;
-
-        for (int i=0; i<3; i++){
-            if (decision.equalsIgnoreCase(Integer.toString(pokemons[i].getID()))){
-                chosenID=i;
-                System.out.printf("OAK:     You chose %s, an amazing choice. Best of luck!\n", pokemons[chosenID].getName());
-                System.out.println("+--------------------------------------------------------------------------------------------+");
+        boolean condition = true;
+        
+        while(condition)
+        {
+            String decision = choice();
+            if(Integer.parseInt(decision) < 4 && Integer.parseInt(decision) > 0)
+            {
+                for (int i=0; i<3; i++)
+                {
+                    if (decision.equalsIgnoreCase(Integer.toString(pokemons[i].getID())))
+                    {
+                        chosenID=i;
+                        System.out.printf("OAK:     You chose %s, an amazing choice. Best of luck!\n", pokemons[chosenID].getName());
+                        System.out.println("+--------------------------------------------------------------------------------------------+");
+                    }
+                }
+                condition = false;
             }
+            else
+            {
+                System.out.println("Invalid Option!");
+            }
+
         }
         return pokemons[chosenID];
     }
@@ -264,7 +292,7 @@ public class GameFlow
 
             while (pokemonlist.hasNextLine()) {
                 String[] pokemonRead = pokemonlist.nextLine().split(",");
-                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13], Integer.parseInt(pokemonRead[14]));
+                pokemons[i] = new Pokemon(Integer.parseInt(pokemonRead[0]),pokemonRead[1], pokemonRead[2],Integer.parseInt(pokemonRead[3]), pokemonRead[4], Integer.parseInt(pokemonRead[5]), pokemonRead[6], Integer.parseInt(pokemonRead[7]), pokemonRead[8], pokemonRead[9], pokemonRead[10], pokemonRead[11], pokemonRead[12], pokemonRead[13], Integer.parseInt(pokemonRead[14]), Integer.parseInt(pokemonRead[15]), pokemonRead[16]);
                 i++;
             }
 
@@ -304,16 +332,12 @@ public class GameFlow
                     case 1:
                     {
                         City currentCity = player.getLocation();
-                        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !(objectName == "Lavender Town")) {
+                        if (!currentCity.getName().equalsIgnoreCase("Pallet Town") && !currentCity.getName().equalsIgnoreCase("Lavender Town")) {
                             System.out.println("Challenging Gym Leader " + (CityManager.cities).get(CityManager.currentCity).getGymLeader() + "...");
                             System.out.println("+--------------------------------------------------------------------------------------------+");
-    
+                            System.out.println(CityManager.currentCity);
                             Battle battle = new Battle(Main.currentPlayer, CityManager.cities.get(CityManager.currentCity));
-                        }
-                        else if(currentCity.getName().equalsIgnoreCase("Lavender Town"))
-                        {
-                            System.out.println("INVALID OPTION");
-                            break;
+                            break outer;
                         }
                         else{
                             System.out.printf("MOM: \"Oh, %s! You're leaving on your adventure with Pokémon? How\n" +
@@ -327,10 +351,9 @@ public class GameFlow
                                     "awaits! Oh, and don’t forget to change your underwear every day! Safe\n" +
                                     "travels, my dear!\"\n", player.getPlayerName());
                             System.out.println("+--------------------------------------------------------------------------------------------+");
-    
+                            break;
                         }
-
-                        break;
+                        // break;
                     }
                     case 2:
                     {

@@ -13,7 +13,7 @@ public class Obj_CeladonCity extends SuperObject
     public Obj_CeladonCity(GamePanel panel)
     {
         this.panel = panel;
-        name = "Celadon CIty";
+        name = "Celadon City";
         
         try
         {
@@ -24,5 +24,7 @@ public class Obj_CeladonCity extends SuperObject
         {
             e.printStackTrace();
         }
+
+        collision = true;
     }    
 }

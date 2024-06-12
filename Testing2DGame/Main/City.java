@@ -12,26 +12,19 @@ public class City
     private String gymType;
     private List<Pokemon> wildPokemon = new ArrayList<>();
     private List<Pokemon> gymLeaderPokemon = new ArrayList<>();
+    private String badge;
 
-    public City(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> gymLeaderPokemon, List<String> wildPokemons)
+    public City(String name,String badge, List<String> adjacentCities, String gymLeader, String gymType, List<List<String>> gymLeaderPokemon, List<List<String>> wildPokemons)
     {
         this.name = name;
+        this.badge = badge;
         this.adjacentCities = adjacentCities;
         this.gymLeader = gymLeader;
         this.gymType = gymType;
-        //CHANGE TO ANOTHER ARRAY DONT USE WILDPOKEMON
-//        for(int j=0; j<wildPokemon.size(); j++) {
-//            for (int i = 0; i < GameFlow.pokemons.length; i++) {
-//                if (GameFlow.pokemons[i].getName().equalsIgnoreCase(wildPokemon.get(j))){
-//                    this.wildPokemon.add(GameFlow.pokemons[i]);
-//                }
-//            }
-//        }
+
 
         setWildPokemon(wildPokemons);
         setGymLeaderPokemon(gymLeaderPokemon);
-
-
 
     }
 
@@ -64,28 +57,40 @@ public class City
         return gymLeaderPokemon;
     }
 
-    public void setWildPokemon(List<String> wildPokemonNames) {
+    public void setWildPokemon(List<List<String>> wildPokemonNames) {
+        int i=0;
         this.wildPokemon.clear(); // Ensure the list is empty before adding new Pokemon
-        for (String name : wildPokemonNames) {
+        for (List<String> name : wildPokemonNames) {
             for (Pokemon pokemon : GameFlow.pokemons) {
-                if (pokemon.getName().equalsIgnoreCase(name)) {
+                if (pokemon.getName().equalsIgnoreCase(name.get(0))) {
                     this.wildPokemon.add(pokemon);
+                    this.wildPokemon.get(i).setLevel(Integer.parseInt(name.get(1)));
                     break; // Break the inner loop once a match is found
                 }
             }
         }
     }
 
-    public void setGymLeaderPokemon(List<String> gymLeaderPokemon) {
+    public void setGymLeaderPokemon(List<List<String>> gymLeaderPokemon) {
+        int i=0;
         this.gymLeaderPokemon.clear(); // Ensure the list is empty before adding new Pokemon
-        for (String name : gymLeaderPokemon) {
+        for (List<String> name : gymLeaderPokemon) {
             for (Pokemon pokemon : GameFlow.pokemons) {
-                if (pokemon.getName().equalsIgnoreCase(name)) {
+                if (pokemon.getName().equalsIgnoreCase(name.get(0))) {
                     this.gymLeaderPokemon.add(pokemon);
+                    this.gymLeaderPokemon.get(i).setLevel(Integer.parseInt(name.get(1)));
                     break; // Break the inner loop once a match is found
                 }
             }
         }
+    }
+
+    public String getBadge() {
+        return badge;
+    }
+
+    public void setBadge(String badge) {
+        this.badge = badge;
     }
 
     public String printWildPokemon() {
@@ -106,4 +111,3 @@ public class City
         return name;
     }
 }
-

@@ -3,7 +3,8 @@ package Testing2DGame.Main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player1 {
+public class Player1 
+{
 
     // VARIABLES
     private String playerName;
@@ -11,6 +12,7 @@ public class Player1 {
     private int HP;
     private int XP;
     private List<String> badges;
+    private List<String> defeatedGym;
 
     //private String location;  //should we make another class for location?
 
@@ -38,6 +40,11 @@ public class Player1 {
         badges.add(badge);
     }
 
+    public void addDefeatedGym(String gym) {
+        defeatedGym.add(gym);
+    }
+
+
     public void showBadges() {
         System.out.println("Your Badges:");
 
@@ -56,13 +63,8 @@ public class Player1 {
     public void showPokemon() { // method to show all pokemon yang wujud
         System.out.println("Your Pokémon:");
         for (int i=0; i<getPokemon().size(); i++){
-            if (getPokemon().get(i).getLevel()>=1 && getPokemon().get(i).getLevel()<=10){
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/100 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }else if (getPokemon().get(i).getLevel()>=10 && getPokemon().get(i).getLevel()<=30){
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/200 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }else{
-                System.out.printf("- %-10s [ Level:%2d ][ XP:%3d/300 ][ HP:%3d/100 ]\n", getPokemon().get(i).getName(), getPokemon().get(i).getLevel(),getPokemon().get(i).getXp(), getPokemon().get(i).getHp());
-            }
+            System.out.println(pokemon.get(i));
+            System.out.println();
         }
         System.out.println("+--------------------------------------------------------------------------------------------+");
 
@@ -125,12 +127,21 @@ public class Player1 {
     }
 
 
+    public void setBadges(List<String> badges) {
+        this.badges = badges;
+    }
 
     public void setLocation(City location) {
         this.location = location;
     }
 
+    public List<String> getDefeatedGym() {
+        return defeatedGym;
+    }
 
+    public void setDefeatedGym(List<String> defeatedGym) {
+        this.defeatedGym = defeatedGym;
+    }
 }
 
 

@@ -12,7 +12,7 @@ public class FightWildPokemon {
         int index = random.nextInt(currentLocation.getWildPokemon().size());
 
         System.out.println("You are about to fight random wild Pokemon from " + currentLocation.getName() + "!");
-        System.out.println("Prepare yourself for an intense battle with "+ currentLocation.getWildPokemon().get(index).getName()+  "!");
+        System.out.println("Prepare yourself for an intense battle with "+ currentLocation.getWildPokemon().get(index).getName()+" [Level "+ currentLocation.getWildPokemon().get(index).getLevel() +  "] !");
         System.out.println("\nYour Pokemon:");
         System.out.printf("%s - Level: %d\n", player.getPokemon().get(0).getName(), player.getPokemon().get(0).getLevel());
         System.out.println("+--------------------------------------------------------------------------------------------+");

@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import javax.sound.midi.Soundbank;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import java.sql.SQLOutput;
 import java.util.List;
@@ -15,6 +16,8 @@ public class MemoryCartridge {
     private static String trainerName;
     //private static Player currentPlayer;
     private static int index;
+    private static JFrame window;
+    private static GamePanel panel;
 
 //    public static void main(String[] args) {
 //        //Scanner sc = new Scanner(System.in);
@@ -68,68 +71,77 @@ public class MemoryCartridge {
 
                 System.out.println("+--------------------------------------------------------------------------------------------+");
 
+                window = new JFrame();
+    
+                window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                window.setResizable(true);
+                window.setTitle("Pokemon-Kanto Adventures");
+
+                panel = new GamePanel();
+                window.add(panel);
+
+                window.pack();
+
+                window.setLocationRelativeTo(null);
+                window.setVisible(true);
+                
+                panel.setupGame();
+                panel.startGameThread();
+
                 break;
 
             case 2 :
-                // Start new adventure
-                // GameFlow.start();
-                // Save the new player's game data
-                //Player newPlayer = Main.currentPlayer;
                 System.out.println("+---------------------------------------------------------------------------------+");
                 System.out.print("Enter the number of the saved game you want to override : ");
                 int input = sc.nextInt();
                 System.out.println("+--------------------------------------------------------------------------------------------+");
+                int[] tempDamage = new int[2];
 
-                switch (input){
+                switch (input)
+                {
                     case 1:
                         Main.player1 = new Player1(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player1;
 
-                        JFrame window = new JFrame();
-    
+                        Main.currentPlayer.getPokemon().get(0).setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
+                        Main.currentPlayer.getPokemon().get(0).setDamage(tempDamage);
+
+                        window = new JFrame();
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         window.setResizable(true);
                         window.setTitle("Pokemon-Kanto Adventures");
-
-                        GamePanel panel = new GamePanel();
+                        panel = new GamePanel();
                         window.add(panel);
-
                         window.pack();
-
                         window.setLocationRelativeTo(null);
                         window.setVisible(true);
-                        
                         panel.setupGame();
                         panel.startGameThread();
 
-                        //while (true) {
-                        // gameFlow.intermediate(Main.player1);
                         break;
 
                     case 2:
 
                         Main.player2 = new Player1(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player2;
+                        Main.currentPlayer.getPokemon().get(0).setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
                         //while (true) {
 
                         window = new JFrame();
-                    
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         window.setResizable(true);
                         window.setTitle("Pokemon-Kanto Adventures");
-
                         panel = new GamePanel();
                         window.add(panel);
-
                         window.pack();
-
                         window.setLocationRelativeTo(null);
                         window.setVisible(true);
-                        
                         panel.setupGame();
                         panel.startGameThread();
-
-                        // gameFlow.intermediate(Main.player2);
 
                         break;
 
@@ -137,26 +149,21 @@ public class MemoryCartridge {
 
                         Main.player3 = new Player1(gameFlow.enterName(), List.of(gameFlow.choosePokemon()));
                         Main.currentPlayer = Main.player3;
+                        Main.currentPlayer.getPokemon().get(0).setLevel(5);
+                        tempDamage[0] =Main.currentPlayer.getPokemon().get(0).getDamage()[0]+10;
+                        tempDamage[1] =Main.currentPlayer.getPokemon().get(0).getDamage()[1]+10;
 
                         window = new JFrame();
-    
                         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                         window.setResizable(true);
                         window.setTitle("Pokemon-Kanto Adventures");
-
                         panel = new GamePanel();
                         window.add(panel);
-
                         window.pack();
-
                         window.setLocationRelativeTo(null);
                         window.setVisible(true);
-                        
                         panel.setupGame();
                         panel.startGameThread();
-
-                        //while (true) {
-                        // gameFlow.intermediate(Main.player3);
 
                         break;
 

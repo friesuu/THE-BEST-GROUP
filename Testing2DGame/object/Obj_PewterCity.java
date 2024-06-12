@@ -25,6 +25,5 @@ public class Obj_PewterCity extends SuperObject
             e.printStackTrace();
         }
         
-        collision = true;
     }
 }

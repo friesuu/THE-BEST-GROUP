@@ -33,22 +33,28 @@ public class SaveGameManager {
         JSONArray saveBadges = new JSONArray();
         JSONObject badges = new JSONObject();
         saveData.put("trainerName", player.getPlayerName());
-        saveBadges.add("to be added in the class");
-        saveData.put("earnedBadges",saveBadges);
-        saveDefeated.add("to be added in the class");
-        saveData.put("defeatedGymLeaders", saveDefeated);
         saveData.put("currentLocation", player.getLocation().getName());
-        for (int i=0; i<player.getPokemon().size(); i++){
+        for (int i=0; i<player.getPokemon().size(); i++) {
             savePokemon.add(player.getPokemon().get(i).getName());
             savePokemonLevel.add(player.getPokemon().get(i).getLevel());
             savePokemonHP.add(player.getPokemon().get(i).getHp());
             savePokemonXP.add(player.getPokemon().get(i).getXp());
         }
+
+        for(int j = 0; j < player.getBadges().size(); j++){
+            saveBadges.add(player.getBadges().get(j));
+        }
+
+        for (int k=0;k < player.getDefeatedGym().size(); k++){
+            saveDefeated.add(player.getDefeatedGym().get(k));
+        }
+
+        saveData.put("earnedBadges",saveBadges);
         saveData.put("pokemonTeam", savePokemon);
         saveData.put("pokemonLevel", savePokemonLevel);
-        saveData.put("pokemonHP",savePokemonHP);
+        saveData.put("pokemonHP", savePokemonHP);
         saveData.put("pokemonXP", savePokemonXP);
-
+        saveData.put("defeatedGymLeaders", saveDefeated);
 
 
 
@@ -61,35 +67,7 @@ public class SaveGameManager {
 
     static List<Player1> savedPlayers = new ArrayList<>();
 
-    // Function to display saved games
-//    public static void displaySavedGames() {
-//        List<Player> savedPlayers = SaveGameManager.getSavedPlayers();
-//        System.out.println("+---------------------------------------------------------------------------------+");
-//        System.out.println("Saved Games ...");
-//        System.out.println("+---------------------------------------------------------------------------------+");
-//        for(int i = 0; i < savedPlayers.size(); i++) {
-//            Player player = savedPlayers.get(i);
-//            System.out.println("        " + (i + 1) + ". " + player.getPlayerName());
-//        }
-//    }
 
-    //Function to load save game
-    /**public static List<Player> loadGame() {
-     File folder = new File("saves/");
-     File[] files = folder.listFiles((dir, name) -> name.endsWith(".json"));
-     List<Player> savedPlayers = new ArrayList<>();
-
-     for (File file : files) {
-     try {
-     String jsonString = new String(Files.readAllBytes(file.toPath()));
-     Player player = new GsonBuilder().create().fromJson(jsonString, PokemonKantoAdventure.Player.class);
-     savedPlayers.add(player);
-     } catch (IOException e) {
-     e.printStackTrace();
-     }
-     }
-     return savedPlayers;
-     }**/
 
     // Function to load save game
     public static Player1 loadGame(String filename) {
@@ -110,7 +88,6 @@ public class SaveGameManager {
             JSONArray defeatedGymLeaders = (JSONArray) saveData.get("defeatedGymLeaders");
             String currentLocation = (String) saveData.get("currentLocation");
 
-
             // Create Player object from loaded data
 
             List<Pokemon> tempPokemonList =  new ArrayList<>();
@@ -118,19 +95,17 @@ public class SaveGameManager {
                 for (int i = 0; i < GameFlow.pokemons.length; i++) {
                     if (pokemonTeam.get(j).equals(GameFlow.pokemons[i].getName())){
                         tempPokemonList.add(GameFlow.pokemons[i]);
-                        //ADD ON LEVEL BERAPA HERE USING SETLEVEL METHOD
+                        tempPokemonList.get(j).setLevel(Integer.parseInt( pokemonLevel.get(j).toString()));
+                        tempPokemonList.get(j).setHp(Integer.parseInt( pokemonHP.get(j).toString()));
+                        tempPokemonList.get(j).setXp(Integer.parseInt( pokemonXP.get(j).toString()));
                     }
                 }
             }
 
-            for (int j=0; j<tempPokemonList.size(); j++){
-                tempPokemonList.get(j).setLevel(Integer.parseInt(pokemonLevel.get(j).toString()));
-                tempPokemonList.get(j).setHp(Integer.parseInt(pokemonHP.get(j).toString()));
-                tempPokemonList.get(j).setXp(Integer.parseInt(pokemonXP.get(j).toString()));
-            }
+
 
             player = new Player1(trainerName, tempPokemonList);
-            
+
             City tempLoc = null;
 
             for (Map.Entry<String, City> entry : CityManager.cities.entrySet()) {
@@ -142,25 +117,21 @@ public class SaveGameManager {
             }
             player.setLocation(tempLoc);
 
-//            player.setPokemonTeam((ArrayList<Pokemon>) pokemonTeam);
-//            player.setDefeatedGymLeaders((ArrayList<String>) defeatedGymLeaders);
-//            player.setEarnedBadges((ArrayList<String>) earnedBadges);
+            List<String> tempBadges = new ArrayList<>();
+            for (int i=0; i<earnedBadges.size(); i++){
+                tempBadges.add(earnedBadges.get(i).toString());
+            }
+            player.setBadges(tempBadges);
+
+
         } catch (IOException | ParseException e) {
-            //System.out.println("Error loading game : " + e.getMessage());
-            // Handling error loading game
+
         }
 
         return player;
     }
 
-    // Function to add new player to the saved game list
-//    public static void addNewPlayer(Player player) {
-//        //savedPlayers = new ArrayList<>();
-//        savedPlayers.add(player);
-//
-//        // Save the updates saved game list
-//        saveSavedPlayers(savedPlayers);
-//    }
+
 
     public static void addNewPlayer(Player1 player) {
         if (savedPlayers == null) {
@@ -171,30 +142,6 @@ public class SaveGameManager {
         // Save the updated saved game list
         //saveSavedPlayers(savedPlayers);
     }
-
-    // Function to load saved games
-    /**public static List<PokemonKantoAdventure.Player> loadSaveGames() {
-     JSONParser parser = new JSONParser();
-     List<PokemonKantoAdventure.Player> savedPlayers = new ArrayList<>();
-
-     try (FileReader reader = new FileReader("savedPlayers.json")) {
-     Object obj = parser.parse(reader);
-     JSONArray saveData = (JSONArray) obj;
-
-     for (Object save : saveData) {
-     JSONObject saveObj = (JSONObject) save;
-     String trainerName = (String) saveObj.get("trainerName");
-     String currentLocation = (String) saveObj.get("currentLocation");
-
-     // Create PokemonKantoAdventure.Player object form loaded data
-     PokemonKantoAdventure.Player player = new PokemonKantoAdventure.Player(trainerName, currentLocation);
-     savedPlayers.add(player);
-     }
-     } catch (IOException | ParseException e) {
-     System.out.println("Error loading saved games : " + e.getMessage());
-     }
-     return savedPlayers;
-     }*/
 
     // Function to get the list of saved players
     public static List<Player1> getSavedPlayers() {
@@ -217,9 +164,5 @@ public class SaveGameManager {
         return tempPlayerList;
     }
 
-//    public static void updateSavedPlayers() {
-//        // Save the updated saved games list
-//        //SaveGameManager.saveSavedPlayers(SaveGameManager.loadSaveGames());
-//        saveSavedPlayers(getSavedPlayers());
-//    }
+
 }

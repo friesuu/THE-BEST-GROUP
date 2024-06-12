@@ -1,10 +1,9 @@
 package Testing2DGame.Main;
 
-import java.sql.SQLOutput;
-
-public class Pokemon {
-
-    private int ID, level, speed;
+public class Pokemon 
+{
+    private int ID, levelEvolve, level, speed;
+    private String nextForm;
     private String name, type;
     private int hp;
     private int xp;
@@ -14,11 +13,12 @@ public class Pokemon {
     private String[] weakness = new String[3];
 
 
-    public Pokemon(int ID, String name, String type, int level, String move1, int damage1, String move2, int damage2, String strength1, String strength2, String strength3, String weakness1, String weakness2, String weakness3, int speed){
+    public Pokemon(int ID, String name, String type, int level, String move1, int damage1, String move2, int damage2, String strength1, String strength2, String strength3, String weakness1, String weakness2, String weakness3, int speed, int levelEvolve, String nextForm){
         this.ID = ID;
         this.name = name;
         this.type = type;
-        this.level = level;
+        this.levelEvolve = levelEvolve;
+        this.level=1;
         this.hp = 100;
         this.xp = 0;
         this.move[0] = move1;
@@ -29,9 +29,11 @@ public class Pokemon {
         this.strength[1] = strength2;
         this.strength[2] = strength3;
         this.weakness[0] = weakness1;
-        this.weakness[1] = weakness1;
+        this.weakness[1] = weakness2;
         this.weakness[2] = weakness3;
         this.speed = speed;
+        this.nextForm = nextForm;
+
     }
 
     public Pokemon(String name, String type, int level, int hp, int xp) {
@@ -75,9 +77,41 @@ public class Pokemon {
         level++;
         hp += 10;
         System.out.println(name + " leveled up!");
-        System.out.printf("%s [Level %d ---> Level %d]", name, level-1, level);
+        System.out.printf("%s [Level %d ---> Level %d]\n\n", name, level-1, level);
         updateDamage();
+        evolve();
 
+    }
+
+    private void evolve(){
+        if (level == levelEvolve){
+            for (int i=0; i<GameFlow.pokemons.length; i++){
+                if (GameFlow.pokemons[i].getName().equalsIgnoreCase(nextForm)){
+
+                    System.out.println("\nYour "+ name + " has evolved into "+ GameFlow.pokemons[i].getName()+ "\n");
+
+
+                    name = GameFlow.pokemons[i].getName();
+                    ID = GameFlow.pokemons[i].getID();
+                    type = GameFlow.pokemons[i].getType();
+                    levelEvolve = GameFlow.pokemons[i].getLevelEvolve();
+                    move[0] = GameFlow.pokemons[i].getMove()[0];
+                    damage[0] = GameFlow.pokemons[i].getDamage()[0];
+                    move[1] = GameFlow.pokemons[i].getMove()[1];
+                    damage[1] = GameFlow.pokemons[i].getDamage()[1];
+                    strength[0] = GameFlow.pokemons[i].getStrength()[0];
+                    strength[1] = GameFlow.pokemons[i].getStrength()[1];
+                    strength[2] = GameFlow.pokemons[i].getStrength()[2];
+                    weakness[0] = GameFlow.pokemons[i].getWeakness()[0];
+                    weakness[1] = GameFlow.pokemons[i].getWeakness()[1];
+                    weakness[2] = GameFlow.pokemons[i].getWeakness()[2];
+                    speed = GameFlow.pokemons[i].getSpeed();
+                    nextForm = GameFlow.pokemons[i].getNextForm();
+
+
+                }
+            }
+        }
     }
 
 
@@ -137,6 +171,7 @@ public class Pokemon {
 
     @Override
     public String toString() {
+
         return String.format("Name: %s\nLevel: %d\nType: %s\nHP: %d\nXP: %d/100\nMoves: %s, %s\nStrong Against: %s, %s, %s\nWeak Against: %s, %s, %s",
                 name, level, type, hp, xp, move[0], move[1], strength[0], strength[1], strength[2], weakness[0], weakness[1], weakness[2]);
     }
@@ -154,7 +189,13 @@ public class Pokemon {
     }
 
     public void setLevel(int level) {
+        int difference = level - this.level;
         this.level = level;
+
+        for (int i=0; i < difference; i++){
+            damage[0]+=2;
+            damage[1]+=2;
+        }
     }
 
     public String getName() {
@@ -233,4 +274,25 @@ public class Pokemon {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public void resetHp(){
+       hp=100;
+    }
+
+    public int getLevelEvolve() {
+        return levelEvolve;
+    }
+
+    public void setLevelEvolve(int levelEvolve) {
+        this.levelEvolve = levelEvolve;
+    }
+
+    public String getNextForm() {
+        return nextForm;
+    }
+
+    public void setNextForm(String nextForm) {
+        this.nextForm = nextForm;
+    }
+
 }

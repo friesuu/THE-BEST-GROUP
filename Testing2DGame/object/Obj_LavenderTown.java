@@ -25,6 +25,5 @@ public class Obj_LavenderTown extends SuperObject
             e.printStackTrace();
         }
 
-        collision = true;
     }
 }

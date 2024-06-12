@@ -1,26 +1,27 @@
 package Testing2DGame.Main;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-public class Battle {
+public class Battle 
+{
     private List<Pokemon> oppsPokemon; //could change to class of characters
     private List<Pokemon> playersPokemon = new ArrayList<>(); // could change to class of characters
     private int playersPokemonLevel;
     private int oppPokemonLevel;
-    public List<Pokemon> getOppsPokemon() {
+    public List<Pokemon> getOppsPokemon() 
+    {
         return oppsPokemon;
     }
-    public void setOppsPokemon(List<Pokemon> oppsPokemon) {
+    public void setOppsPokemon(List<Pokemon> oppsPokemon) 
+    {
         this.oppsPokemon = oppsPokemon;
     }
-    public List<Pokemon> getPlayersPokemon() {
+    public List<Pokemon> getPlayersPokemon() 
+    {
         return playersPokemon;
     }
-    public void setPlayersPokemon(List<Pokemon> playersPokemon) {
+    public void setPlayersPokemon(List<Pokemon> playersPokemon) 
+    {
         this.playersPokemon = playersPokemon;
     }
 
@@ -91,12 +92,13 @@ public class Battle {
                         System.out.println("+--------------------------------------------------------------------------------------------+");
 
                     }
+
                     continue;
                 }
 
                 if (turnChecker(playersPokemon.get(k),oppsPokemon.get(l)) == playersPokemon.get(k)) {
                     if (i % 2 == 1) {
-                        battleRounds(j, playersPokemon.get(k));
+                        battleRounds(j, player, k);
                         action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
                         i++;
                         i %= 2;
@@ -108,7 +110,7 @@ public class Battle {
                     }
                 }else{
                     if (i % 2 == 0) {
-                        battleRounds(j, playersPokemon.get(k));
+                        battleRounds(j, player, k);
                         action(choice() - 1, playersPokemon.get(k), oppsPokemon.get(l));
                         i++;
                         i %= 2;
@@ -119,15 +121,45 @@ public class Battle {
                         i %= 2;
                     }
                 }
+            }
+        }
 
+        if (l >= oppsPokemon.size()){
+
+            boolean defeatedBefore = false;
+            for (int p=0; p<player.getBadges().size(); p++){
+                if (player.getBadges().get(p).equalsIgnoreCase(opponent.getBadge())){
+                    defeatedBefore = true;
+                    break;
+                }
+            }
+            if (defeatedBefore ==  false){
+                player.addBadge(opponent.getBadge());
+                player.addDefeatedGym(opponent.getGymLeader());
             }
 
+            System.out.println( "You have obtained " + opponent.getBadge()+ "!\n");
+            System.out.println("+--------------------------------------------------------------------------------------------+");
+
+
+        }
+
+        for(int a=0 ; a<oppsPokemon.size() ; a++){
+            oppsPokemon.get(a).resetHp();
+        }
+
+        for(int b=0 ; b<playersPokemon.size() ; b++){
+            playersPokemon.get(b).resetHp();
         }
 
         System.out.println("\nThe battle ended.");
         System.out.println("+--------------------------------------------------------------------------------------------+");
 
-
+        if (Main.currentPlayer.getBadges().size()>= 8){
+            System.out.println("\n");
+            System.out.println("CONGRATULATION "+player.getPlayerName() + " YOU HAVE FINISHED THE GAME!\n\n\n");
+            System.exit(0);
+        }
     }
 
 
@@ -147,9 +179,7 @@ public class Battle {
     public void action (int decision, Pokemon pokemon, Pokemon opponent){
         System.out.println(pokemon.getName()+ " uses " + pokemon.getMove()[decision]);
 
-        // I THINK THERE SHOULD BE CONDITION CHECKING HOW MUCH OPP'S XPHP DECREASES TO KNOW EFFECTIVE OR NOT
-        //UPDATE : ITS DONE ALREADY IN POKEMON CLASS
-        //UPDATE: I AM NOT SURE IF IT CHECKS EFFECTIVE DAMAGE FOR OPPONENT
+
         int damage = pokemon.calculateDamage(decision,opponent);
         opponent.setHp(opponent.getHp()-damage);
     }
@@ -157,11 +187,11 @@ public class Battle {
 
 
 
-    public void battleRounds (int count, Pokemon pokemons){
+    public void battleRounds (int count, Player1 player, int index){
         System.out.printf("\nRound %d: \n", count);
-        System.out.printf("%s's Moves:\n", pokemons.getName());
-        pokemons.printMove();
-        System.out.println("\nWhich move will " + pokemons.getName() + " use?");
+        System.out.printf("%s's Moves:\n", player.getPokemon().get(index).getName());
+        player.getPokemon().get(index).printMove();
+        System.out.println("\nWhich move will " + player.getPokemon().get(index).getName() + " use?");
     }
 
     public int opponentRound (Pokemon opponent){

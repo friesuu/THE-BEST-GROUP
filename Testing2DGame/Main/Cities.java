@@ -1,46 +1,46 @@
-package Testing2DGame.Main;
+// package Testing2DGame.Main;
 
-import java.util.List;
+// import java.util.List;
 
-public class Cities 
-{
-    private String name;
-    private List<String> adjacentCities;
-    private String gymLeader;
-    private String gymType;
-    private List<String> wildPokemon;
+// public class Cities 
+// {
+//     private String name;
+//     private List<String> adjacentCities;
+//     private String gymLeader;
+//     private String gymType;
+//     private List<String> wildPokemon;
 
-    public Cities(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> wildPokemon) 
-    {
-        this.name = name;
-        this.adjacentCities = adjacentCities;
-        this.gymLeader = gymLeader;
-        this.gymType = gymType;
-        this.wildPokemon = wildPokemon;
-    }
+//     public Cities(String name, List<String> adjacentCities, String gymLeader, String gymType, List<String> wildPokemon) 
+//     {
+//         this.name = name;
+//         this.adjacentCities = adjacentCities;
+//         this.gymLeader = gymLeader;
+//         this.gymType = gymType;
+//         this.wildPokemon = wildPokemon;
+//     }
 
-    public String getName() 
-    {
-        return name;
-    }
+//     public String getName() 
+//     {
+//         return name;
+//     }
 
-    public List<String> getAdjacentCities() 
-    {
-        return adjacentCities;
-    }
+//     public List<String> getAdjacentCities() 
+//     {
+//         return adjacentCities;
+//     }
 
-    public String getGymLeader() 
-    {
-        return gymLeader;
-    }
+//     public String getGymLeader() 
+//     {
+//         return gymLeader;
+//     }
 
-    public String getGymType() 
-    {
-        return gymType;
-    }
+//     public String getGymType() 
+//     {
+//         return gymType;
+//     }
 
-    public List<String> getWildPokemon() 
-    {
-        return wildPokemon;
-    }
-}
+//     public List<String> getWildPokemon() 
+//     {
+//         return wildPokemon;
+//     }
+// }

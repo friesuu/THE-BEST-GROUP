@@ -196,6 +196,7 @@ public class Player extends Entity
 
             String objectName = gamePanel.object[index].name;
             Main.currentPlayer.setLocation(CityManager.cities.get(objectName));
+            CityManager.currentCity = objectName;
             gameFlow = new GameFlow();
             
             // outer:
@@ -270,12 +271,12 @@ public class Player extends Entity
                     gameFlow.intermediate(Main.currentPlayer, objectName);
                     break;
                 }
-                case "Cerulean City":
+                case "Celadon City":
                 {
                     gameFlow.intermediate(Main.currentPlayer, objectName);
                     break;
                 }
-                case "Celadon City":
+                case "Cerulean City":
                 {
                     gameFlow.intermediate(Main.currentPlayer, objectName);
                     break;
